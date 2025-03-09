@@ -14,7 +14,7 @@ public class connect {
     
     public static void connect() {
         
-        String url = "jdbc:sqlite:C:/college_tracker.db";
+        String url = "jdbc:sqlite:src/college/tracker/database/collegeTracker.db";
         
         try (Connection connection = DriverManager.getConnection(url)) {
             System.out.println("Connection Successful");
