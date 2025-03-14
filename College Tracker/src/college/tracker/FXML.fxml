@@ -5,19 +5,36 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="754.0" prefWidth="1028.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="college.tracker.FXMLController">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="college.tracker.FXMLController">
    <children>
       <TabPane prefHeight="754.0" prefWidth="1028.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Home">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField layoutX="440.0" layoutY="109.0" text="Hello, today is..." />
+                        <TableView layoutX="187.0" layoutY="160.0" prefHeight="320.0" prefWidth="653.0">
+                          <columns>
+                            <TableColumn id="classNameTable" prefWidth="200.0" text="Class Name" />
+                            <TableColumn id="classStartDateTable" prefWidth="150.0" text="Start Date" />
+                              <TableColumn id="classEndDateTable" prefWidth="150.0" text="End Date" />
+                              <TableColumn id="classColorTable" prefWidth="150.0" text="Color" />
+                          </columns>
+                        </TableView>
+                        <Button id="addClassButton" fx:id="addClassButton" layoutX="789.0" layoutY="495.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="50.0" text="+">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Calendar">
@@ -34,7 +51,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="timer_input" layoutX="205.0" layoutY="387.0" prefHeight="101.0" prefWidth="496.0" promptText="Enter desired time" onKeyPressed="#handleKeyPress">
+                        <TextField fx:id="timer_input" layoutX="205.0" layoutY="387.0" onKeyPressed="#handleKeyPress" prefHeight="101.0" prefWidth="496.0" promptText="Enter desired time">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -46,20 +63,20 @@
                         </TextField>
                         <ButtonBar layoutX="63.0" layoutY="557.0" prefHeight="91.0" prefWidth="779.0">
                           <buttons>
-                              <Button fx:id="btn_5min" alignment="CENTER" contentDisplay="CENTER" minWidth="66.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="114.0" text="5" onAction="#handleTimeButton"/>
-                              <Button fx:id="btn_10min" mnemonicParsing="false" prefHeight="105.0" prefWidth="114.0" text="10" onAction="#handleTimeButton"/>
-                              <Button fx:id="btn_15min" mnemonicParsing="false" prefHeight="105.0" prefWidth="114.0" text="15" onAction="#handleTimeButton"/>
-                              <Button fx:id="btn_30min" mnemonicParsing="false" prefHeight="105.0" prefWidth="114.0" text="30" onAction="#handleTimeButton"/>
-                              <Button fx:id="btn_45min" mnemonicParsing="false" prefHeight="105.0" prefWidth="114.0" text="45" onAction="#handleTimeButton"/>
-                              <Button fx:id="btn_60min" mnemonicParsing="false" prefHeight="105.0" prefWidth="114.0" text="60" onAction="#handleTimeButton"/>
-                              <Button fx:id="btn_120min" mnemonicParsing="false" prefHeight="91.0" prefWidth="114.0" text="120" onAction="#handleTimeButton"/>
+                              <Button fx:id="btn_5min" alignment="CENTER" contentDisplay="CENTER" minWidth="66.0" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="91.0" prefWidth="114.0" text="5" />
+                              <Button fx:id="btn_10min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="10" />
+                              <Button fx:id="btn_15min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="15" />
+                              <Button fx:id="btn_30min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="30" />
+                              <Button fx:id="btn_45min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="45" />
+                              <Button fx:id="btn_60min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="60" />
+                              <Button fx:id="btn_120min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="91.0" prefWidth="114.0" text="120" />
                           </buttons>
                         </ButtonBar>
                         <VBox layoutX="740.0" layoutY="124.0" prefHeight="365.0" prefWidth="114.0" spacing="30.0">
                            <children>
-                              <Button fx:id="btn_start" mnemonicParsing="false" prefHeight="91.0" prefWidth="114.0" text="Start" onAction="#handleStartButton"/>
-                              <Button fx:id="btn_stop" mnemonicParsing="false" prefHeight="91.0" prefWidth="114.0" text="Stop" onAction="#handleStopButton" />
-                              <Button fx:id="btn_reset" mnemonicParsing="false" prefHeight="91.0" prefWidth="114.0" text="Reset" onAction="#handleResetButton">
+                              <Button fx:id="btn_start" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="91.0" prefWidth="114.0" text="Start" />
+                              <Button fx:id="btn_stop" mnemonicParsing="false" onAction="#handleStopButton" prefHeight="91.0" prefWidth="114.0" text="Stop" />
+                              <Button fx:id="btn_reset" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="91.0" prefWidth="114.0" text="Reset">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>

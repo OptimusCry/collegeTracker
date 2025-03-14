@@ -26,7 +26,15 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField timer_output;
     
+
+    
     private myTimer studyTimer;
+    
+    private ClassGui myClassGui;
+
+    @FXML
+    private Button addClassButton;
+    
 
     /**
      * Initializes the controller class.
@@ -36,17 +44,27 @@ public class FXMLController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        myClassGui = new ClassGui();
+        addClassButton.setOnAction(event -> onAddClassButtonClick(event));
         studyTimer = new myTimer(() -> updateTimer());
+        
+       
+    }
+    
+    public void onAddClassButtonClick(ActionEvent event) {
+        myClassGui.handleAddClass();
     }
     
    // start of code for the study timer
     
+    @FXML
     public void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             setTime();
         }
     }
     
+    @FXML
     public void handleTimeButton(ActionEvent event) {
         // getting the button that was clicked by the user
         Button sourceButton = (Button) event.getSource();
@@ -67,16 +85,19 @@ public class FXMLController implements Initializable {
         studyTimer.startTimer((int) duration.getSeconds());
     }
     
+    @FXML
     public void handleStartButton(ActionEvent event) {
         int remainingTime = studyTimer.getRemainingTime();
         studyTimer.startTimer(remainingTime);
     }
     
+    @FXML
     public void handleStopButton(ActionEvent event) {
         studyTimer.stopTimer();
         setRemainingTime();
     }
     
+    @FXML
     public void handleResetButton(ActionEvent event) {
         // stop the timer
         studyTimer.stopTimer();
