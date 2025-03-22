@@ -1,0 +1,115 @@
+
+Created on : Mar 19, 2025, 10:52:50 PM
+Author     : saman
+*/
+.root{
+-fx-background-color: #046A38;
+-fx-font-family: 'Berlin Sans FB', sans-serif;
+-fx-font-size: 18px;
+                                            
+}
+#btn_5min{
+-fx-background-color: white;
+-fx-font-size: 36px;
+-fx-text-fill: #046A38;
+-fx-background-radius: 50%;
+-fx-border-radius: 50%;
+
+}
+#btn_10min{
+-fx-background-color: white;
+-fx-font-size: 36px;
+-fx-text-fill: #046A38;
+-fx-background-radius: 50%;
+-fx-border-radius: 50%;
+
+}
+#btn_15min{
+-fx-background-color: white;
+-fx-font-size: 36px;
+-fx-text-fill: #046A38;
+-fx-background-radius: 50%;
+-fx-border-radius: 50%;
+
+}
+#btn_30min{
+-fx-background-color: white;
+-fx-font-size: 36px;
+-fx-text-fill: #046A38;
+-fx-background-radius: 50%;
+-fx-border-radius: 50%;
+
+}
+#btn_45min{
+-fx-background-color: white;
+-fx-font-size: 36px;
+-fx-text-fill: #046A38;
+-fx-background-radius: 50%;
+-fx-border-radius: 50%;
+
+}
+#btn_60min{
+-fx-background-color: white;
+-fx-font-size: 36px;
+-fx-text-fill: #046A38;
+-fx-background-radius: 50%;
+-fx-border-radius: 50%;
+
+}
+#btn_120min{
+-fx-background-color: white;
+-fx-font-size: 36px;
+-fx-text-fill: #046A38;
+-fx-background-radius: 50%;
+-fx-border-radius: 50%;
+
+}
+#btn_start{
+-fx-background-color: #138742;
+-fx-border-color: white;
+-fx-border-width: 3px;
+-fx-font-size: 18px;
+-fx-text-fill: white;
+-fx-background-radius: 25px;
+-fx-border-radius: 25px; 
+}
+#btn_stop{    
+-fx-background-color: white;
+-fx-border-color: #138742;
+-fx-border-width: 4px;
+-fx-font-size: 18px;
+-fx-text-fill: #138742;
+-fx-background-radius: 25px;
+-fx-border-radius: 25px; 
+
+}
+#btn_reset{
+-fx-background-color: lightgrey;
+-fx-border-color: white;
+-fx-border-width: 3px;
+-fx-font-size: 18px;
+-fx-text-fill: white;
+-fx-background-radius: 25px;
+-fx-border-radius: 25px;     
+}
+
+
+.tab{
+-fx-background-color: white;
+-fx-background-radius: 35px;
+-fx-border-radius: 35px; 
+
+-fx-text-fill: #046A38;
+}
+.tab:active{
+-fx-background-color: #046A38;
+-fx-text: white;
+}
+#timer_output{
+-fx-background-radius: 15px;
+-fx-border-radius: 15px; 
+}
+#timer_input{
+ -fx-background-radius: 15px;
+-fx-border-radius: 15px;    
+}

@@ -23,7 +23,7 @@ public class CollegeTracker extends Application {
     public void start(Stage primaryStage) throws Exception {
         connect();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/college/tracker/FXML.fxml"));
-        
+        scene.getStylesheets().add(getClass().getResource("collegetracker.css").toExternalForm());
         Scene scene = new Scene(loader.load(), 1000, 800);
         
         primaryStage.setTitle("College Tracker");
