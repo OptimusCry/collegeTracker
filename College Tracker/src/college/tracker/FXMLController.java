@@ -1,7 +1,9 @@
+
 package college.tracker;
 
 import java.io.IOException;
 import java.net.URL;
+
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.Duration;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,6 +28,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
+
 
 public class FXMLController implements Initializable {
 
@@ -34,6 +43,7 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField timer_output;
     
+
     private myTimer studyTimer;
     
     // CALENDAR
@@ -68,12 +78,44 @@ public class FXMLController implements Initializable {
     
    // start of code for the study timer
     
+    private myTimer studyTimer;
+    
+    private ClassGui myClassGui;
+
+    @FXML
+    private Button addClassButton;
+    
+
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        myClassGui = new ClassGui();
+        addClassButton.setOnAction(event -> onAddClassButtonClick(event));
+        studyTimer = new myTimer(() -> updateTimer());
+        
+       
+    }
+    
+    public void onAddClassButtonClick(ActionEvent event) {
+        myClassGui.handleAddClass();
+    }
+    
+   // start of code for the study timer
+    
+    @FXML
     public void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             setTime();
         }
     }
     
+
+    @FXML
     public void handleTimeButton(ActionEvent event) {
         // getting the button that was clicked by the user
         Button sourceButton = (Button) event.getSource();
@@ -94,16 +136,25 @@ public class FXMLController implements Initializable {
         studyTimer.startTimer((int) duration.getSeconds());
     }
     
+
+    @FXML
+
     public void handleStartButton(ActionEvent event) {
         int remainingTime = studyTimer.getRemainingTime();
         studyTimer.startTimer(remainingTime);
     }
     
+
+    @FXML
+
     public void handleStopButton(ActionEvent event) {
         studyTimer.stopTimer();
         setRemainingTime();
     }
     
+
+    @FXML
+
     public void handleResetButton(ActionEvent event) {
         // stop the timer
         studyTimer.stopTimer();
@@ -315,3 +366,6 @@ public class FXMLController implements Initializable {
     
    
 }
+   
+}
+

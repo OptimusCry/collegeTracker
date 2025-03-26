@@ -15,12 +15,41 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="754.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="college.tracker.FXMLController">
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="college.tracker.FXMLController">
+
    <children>
       <TabPane prefHeight="754.0" prefWidth="1028.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Home">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField layoutX="440.0" layoutY="109.0" text="Hello, today is..." />
+                        <TableView layoutX="187.0" layoutY="160.0" prefHeight="320.0" prefWidth="653.0">
+                          <columns>
+                            <TableColumn id="classNameTable" prefWidth="200.0" text="Class Name" />
+                            <TableColumn id="classStartDateTable" prefWidth="150.0" text="Start Date" />
+                              <TableColumn id="classEndDateTable" prefWidth="150.0" text="End Date" />
+                              <TableColumn id="classColorTable" prefWidth="150.0" text="Color" />
+                          </columns>
+                        </TableView>
+                        <Button id="addClassButton" fx:id="addClassButton" layoutX="789.0" layoutY="495.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="50.0" text="+">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Calendar">
@@ -355,6 +384,7 @@
                           </buttons>
                         </ButtonBar>
                      </children></AnchorPane>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
             <Tab text="To-Do">
