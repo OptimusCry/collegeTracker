@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="200.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="college.tracker.AddEventController">
+   <children>
+      <Label layoutX="40.0" layoutY="59.0" prefHeight="33.0" prefWidth="30.0" text="Title" />
+      <Label layoutX="40.0" layoutY="98.0" prefHeight="33.0" prefWidth="30.0" text="Date" />
+      <TextField fx:id="textFieldForTitle" layoutX="103.0" layoutY="63.0" prefHeight="26.0" prefWidth="211.0" />
+      <DatePicker fx:id="dateField" layoutX="103.0" layoutY="104.0" />
+      <Label layoutX="39.0" layoutY="136.0" prefHeight="33.0" prefWidth="30.0" text="Time" />
+      <ComboBox fx:id="timeField" layoutX="103.0" layoutY="140.0" prefWidth="150.0" />
+      <Button fx:id="saveButton" layoutX="303.0" layoutY="123.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="cancelButton" layoutX="298.0" layoutY="154.0" mnemonicParsing="false" text="Cancel" />
+      <Label layoutX="89.0" layoutY="25.0" text="Add Class Or Event">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

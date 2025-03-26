@@ -1,11 +1,418 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="college.tracker.FXMLController">
-    
+<AnchorPane id="AnchorPane" prefHeight="754.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="college.tracker.FXMLController">
+   <children>
+      <TabPane prefHeight="754.0" prefWidth="1028.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Home">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab text="Calendar">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane fx:id="calendarGrid" hgap="3.0" layoutX="137.0" layoutY="104.0" prefHeight="400.0" prefWidth="400.0" vgap="3.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="94.13577270507812" minHeight="0.0" prefHeight="94.13577270507812" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="59.864227294921875" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <padding>
+                              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                           </padding>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label fx:id="sunLabel" prefHeight="90.0" prefWidth="121.0" text="         SUN" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label fx:id="monLabel" prefHeight="133.0" prefWidth="115.0" text="        MON">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <Label fx:id="tueLabel" prefHeight="103.0" prefWidth="128.0" text="        TUE">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+                                 <children>
+                                    <Label fx:id="wedLabel" prefHeight="96.0" prefWidth="168.0" text="        WED">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4">
+                                 <children>
+                                    <Label fx:id="thuLabel" prefHeight="93.0" prefWidth="162.0" text="        THU">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5">
+                                 <children>
+                                    <Label fx:id="friLabel" prefHeight="112.0" prefWidth="159.0" text="        FRI">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6">
+                                 <children>
+                                    <Label fx:id="satLabel" prefHeight="92.0" prefWidth="128.0" text="        SAT">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="dayBox_1" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="dayLabel_1" />
+                                    <Label fx:id="eventLabel_1" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_2" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="dayLabel_2" />
+                                    <Label fx:id="eventLabel_2" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_3" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="dayLabel_3" />
+                                    <Label fx:id="eventLabel_3" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_4" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="dayLabel_4" />
+                                    <Label fx:id="eventLabel_4" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_5" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="dayLabel_5" />
+                                    <Label fx:id="eventLabel_5" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_6" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="dayLabel_6" prefHeight="17.0" prefWidth="121.0" />
+                                    <Label fx:id="eventLabel_6" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_7" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="dayLabel_7" />
+                                    <Label fx:id="eventLabel_7" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_8" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="dayLabel_8" />
+                                    <Label fx:id="eventLabel_8" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="dayBox_9" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="dayLabel_9" />
+                                    <Label fx:id="eventLabel_9" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_10" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="dayLabel_10" />
+                                    <Label fx:id="eventLabel_10" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_11" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="dayLabel_11" />
+                                    <Label fx:id="eventLabel_11" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_12" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="dayLabel_12" />
+                                    <Label fx:id="eventLabel_12" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_13" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="dayLabel_13" />
+                                    <Label fx:id="eventLabel_13" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_14" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="dayLabel_14" />
+                                    <Label fx:id="eventLabel_14" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_15" prefHeight="61.0" prefWidth="115.0" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="dayLabel_15" />
+                                    <Label fx:id="eventLabel_15" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_16" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="dayLabel_16" />
+                                    <Label fx:id="eventLabel_16" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_17" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="dayLabel_17" />
+                                    <Label fx:id="eventLabel_17" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_18" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="dayLabel_18" />
+                                    <Label fx:id="eventLabel_18" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_19" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="dayLabel_19" />
+                                    <Label fx:id="eventLabel_19" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_20" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="dayLabel_20" />
+                                    <Label fx:id="eventLabel_20" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_21" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="dayLabel_21" />
+                                    <Label fx:id="eventLabel_21" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_22" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="dayLabel_22" />
+                                    <Label fx:id="eventLabel_22" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_23" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="dayLabel_23" />
+                                    <Label fx:id="eventLabel_23" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_24" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="dayLabel_24" />
+                                    <Label fx:id="eventLabel_24" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_25" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="dayLabel_25" />
+                                    <Label fx:id="eventLabel_25" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_26" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="dayLabel_26" />
+                                    <Label fx:id="eventLabel_26" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_27" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="dayLabel_27" />
+                                    <Label fx:id="eventLabel_27" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_28" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="dayLabel_28" />
+                                    <Label fx:id="eventLabel_28" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_29" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="dayLabel_29" />
+                                    <Label fx:id="eventLabel_29" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_30" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="dayLabel_30" />
+                                    <Label fx:id="eventLabel_30" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_31" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="dayLabel_31" />
+                                    <Label fx:id="eventLabel_31" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_32" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="dayLabel_32" />
+                                    <Label fx:id="eventLabel_32" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_33" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="dayLabel_33" />
+                                    <Label fx:id="eventLabel_33" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_34" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="dayLabel_34" />
+                                    <Label fx:id="eventLabel_34" />
+                                 </children></VBox>
+                              <VBox fx:id="dayBox_35" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="dayLabel_35" />
+                                    <Label fx:id="eventLabel_35" />
+                                 </children></VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="dayLabel_36" />
+                                    <Label fx:id="eventLabel_36" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="dayLabel_37" />
+                                    <Label fx:id="eventLabel_37" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="dayLabel_38" />
+                                    <Label fx:id="eventLabel_38" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="dayLabel_39" />
+                                    <Label fx:id="eventLabel_39" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="dayLabel_40" />
+                                    <Label fx:id="eventLabel_40" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="dayLabel_41" />
+                                    <Label fx:id="eventLabel_41" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="dayLabel_42" />
+                                    <Label fx:id="eventLabel_42" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <Button fx:id="addEventButton" layoutX="853.0" layoutY="629.0" mnemonicParsing="false" onAction="#openAddEvent" prefHeight="51.0" prefWidth="60.0" text="+">
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </Button>
+                        <ButtonBar layoutX="20.0" layoutY="60.0" prefHeight="40.0" prefWidth="878.0">
+                          <buttons>
+                            <Button fx:id="btnJanuary" mnemonicParsing="false" onAction="#changeMonth" text="JAN" />
+                              <Button fx:id="btnFebruary" layoutX="573.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="FEB" />
+                              <Button fx:id="btnMarch" layoutX="493.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="MAR" />
+                              <Button fx:id="btnApril" layoutX="413.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="ARI" />
+                              <Button fx:id="btnMay" layoutX="333.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="MAY" />
+                              <Button fx:id="btnJune" layoutX="253.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="JUN" />
+                              <Button fx:id="btnJuly" layoutX="173.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="JUL" />
+                              <Button fx:id="btnAugust" layoutX="93.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="AUG" />
+                              <Button fx:id="btnSeptember" layoutX="590.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="SEP" />
+                              <Button fx:id="btnOctober" layoutX="30.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="OCT" />
+                              <Button fx:id="btnNovember" layoutX="98.0" layoutY="17.0" minWidth="31.0" mnemonicParsing="false" onAction="#changeMonth" prefHeight="26.0" text="NOV" />
+                              <Button fx:id="btnDecember" layoutX="830.0" layoutY="17.0" minWidth="31.0" mnemonicParsing="false" onAction="#changeMonth" prefHeight="26.0" text="DEC" />
+                          </buttons>
+                        </ButtonBar>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="To-Do">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Study Timer">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="timer_input" layoutX="205.0" layoutY="387.0" onKeyPressed="#handleKeyPress" prefHeight="101.0" prefWidth="496.0" promptText="Enter desired time">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="timer_output" editable="false" layoutX="205.0" layoutY="124.0" prefHeight="237.0" prefWidth="495.0" promptText="00:00">
+                           <font>
+                              <Font size="96.0" />
+                           </font>
+                        </TextField>
+                        <ButtonBar layoutX="63.0" layoutY="557.0" prefHeight="91.0" prefWidth="779.0">
+                          <buttons>
+                              <Button fx:id="btn_5min" alignment="CENTER" contentDisplay="CENTER" minWidth="66.0" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="91.0" prefWidth="114.0" text="5" />
+                              <Button fx:id="btn_10min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="10" />
+                              <Button fx:id="btn_15min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="15" />
+                              <Button fx:id="btn_30min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="30" />
+                              <Button fx:id="btn_45min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="45" />
+                              <Button fx:id="btn_60min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="105.0" prefWidth="114.0" text="60" />
+                              <Button fx:id="btn_120min" mnemonicParsing="false" onAction="#handleTimeButton" prefHeight="91.0" prefWidth="114.0" text="120" />
+                          </buttons>
+                        </ButtonBar>
+                        <VBox layoutX="740.0" layoutY="124.0" prefHeight="365.0" prefWidth="114.0" spacing="30.0">
+                           <children>
+                              <Button fx:id="btn_start" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="91.0" prefWidth="114.0" text="Start" />
+                              <Button fx:id="btn_stop" mnemonicParsing="false" onAction="#handleStopButton" prefHeight="91.0" prefWidth="114.0" text="Stop" />
+                              <Button fx:id="btn_reset" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="91.0" prefWidth="114.0" text="Reset">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Timetable">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Settings">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
 </AnchorPane>
