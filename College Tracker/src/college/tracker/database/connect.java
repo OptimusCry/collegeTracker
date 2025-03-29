@@ -12,18 +12,16 @@ import java.sql.SQLException;
  */
 public class connect {
     
-    public static void connect() {
+    public static Connection connect() {
         
         String url = "jdbc:sqlite:src/college/tracker/database/collegeTracker.db";
         
-        try (Connection connection = DriverManager.getConnection(url)) {
-            System.out.println("Connection Successful");
-            
-            
-
-            
+        try {
+            return DriverManager.getConnection(url);
+          
         } catch (SQLException e) {
             System.err.println("Connection failed " + e.getMessage());
+            return null;
         }
         
     }

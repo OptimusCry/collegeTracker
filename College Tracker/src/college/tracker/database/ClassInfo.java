@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package college.tracker.database;
 
 import java.time.LocalDate;
@@ -89,6 +86,13 @@ public class ClassInfo {
                             (int)(color.getRed() * 255),
                             (int)(color.getGreen() * 255),
                             (int)(color.getBlue() * 255));
+    }
+    
+    
+    // Allows me to write the names to the combobox in the to do list without messing with the cellfactory
+    @Override
+    public String toString() {
+        return name;
     }
     
 }

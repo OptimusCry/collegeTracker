@@ -30,21 +30,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 
 
 public class FXMLController implements Initializable {
-
-    @FXML
-    private TextField timer_input;
-    
-    @FXML
-    private TextField timer_output;
-    
-
-    private myTimer studyTimer;
     
     // CALENDAR
     
@@ -68,22 +60,60 @@ public class FXMLController implements Initializable {
     private final Map<LocalDate, List<String>> events = new HashMap<>(); 
     private YearMonth currentMonth;
     
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        studyTimer = new myTimer(() -> updateTimer());
-        currentMonth = YearMonth.of(2025, 1);
-        updateCalendar();
-    }
-    
+        
    // start of code for the study timer
     
+    @FXML
+    private TextField timer_input;
+    
+    @FXML
+    private TextField timer_output;
+    
+
     private myTimer studyTimer;
     
+    // initializes pop up guis for classes and assignments
+    
     private ClassGui myClassGui;
+    
+    private AssignmentGui myAssignmentGui;
 
     @FXML
     private Button addClassButton;
+    
+    // start of to do
+    @FXML
+    private TableColumn<?, ?> toDoClass;
+    @FXML
+    private TableColumn<?, ?> toDoAssignmentName;
+    @FXML
+    private TableColumn<?, ?> toDoDueDate;
+    @FXML
+    private TableColumn<?, ?> toDoCompleted;
+    @FXML
+    private TableColumn<?, ?> toDoDelete;
+    @FXML
+    private Button addAssignment;
+    @FXML
+    private Button btn_5min;
+    @FXML
+    private Button btn_10min;
+    @FXML
+    private Button btn_15min;
+    @FXML
+    private Button btn_30min;
+    @FXML
+    private Button btn_45min;
+    @FXML
+    private Button btn_60min;
+    @FXML
+    private Button btn_120min;
+    @FXML
+    private Button btn_start;
+    @FXML
+    private Button btn_stop;
+    @FXML
+    private Button btn_reset;
     
 
     /**
@@ -95,15 +125,32 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         myClassGui = new ClassGui();
+        myAssignmentGui = new AssignmentGui();
         addClassButton.setOnAction(event -> onAddClassButtonClick(event));
         studyTimer = new myTimer(() -> updateTimer());
+        
+        currentMonth = YearMonth.of(2025, 1);
+        updateCalendar();
         
        
     }
     
+    
+    // handling code for the class and assignment guis
+    
     public void onAddClassButtonClick(ActionEvent event) {
         myClassGui.handleAddClass();
     }
+    
+    // Start of code for the To Do List
+    
+    public void onAddAssignmentButtonClick(ActionEvent event) {
+        myAssignmentGui.handleAddAssignment();
+    }
+    
+    // end of code for the class and assignment guis
+    
+    
     
    // start of code for the study timer
     
@@ -253,6 +300,8 @@ public class FXMLController implements Initializable {
     
     // ------------------------------------------------------
     
+    // start of coded for calendar
+    
     @FXML
     private void changeMonth(javafx.event.ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
@@ -362,10 +411,8 @@ public class FXMLController implements Initializable {
         events.get(date).add(title);
         updateCalendar();
     }
-
     
-   
 }
    
-}
+
 
