@@ -4,7 +4,10 @@
  */
 package college.tracker;
 
+import college.tracker.database.AssignmentDB;
+import college.tracker.database.ClassDB;
 import college.tracker.database.ClassInfo;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -78,10 +81,28 @@ public class ClassGui {
                 
                 // Converting color to hex string to save to the database
                 String colorHex = newClass.toHexString();
+                
+                // adding the information to the database
+                ClassDB classDB = new ClassDB();
+                   
+                   // ensuring that if there are errors, it's displayed
+                   
+                   try {
+                       boolean classAdded = classDB.addClass(newClass);
+                       if (classAdded == true) {
+                           System.out.println("Class added");
+                       } else {
+                           System.out.println("Adding class has failed");
+                       }
+                   } catch (SQLException e) {
+                       e.printStackTrace();
+                       System.out.println("Error: " + e.getMessage());
+                   }
 
                 System.out.println("Class Name: " + className);
                 System.out.println("Selected Color: " + color);
-
+                
+              
             }
         }   
     }   

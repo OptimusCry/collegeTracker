@@ -22,6 +22,14 @@ public class AssignmentInfo {
         this.classId = classId;
     }
 
+    public AssignmentInfo(int id, String name, LocalDate dueDate, String status, int classId) {
+        this.id = id;
+        this.name = name;
+        this.dueDate = dueDate;
+        this.status = status;
+        this.classId = classId;
+    }
+    
     public int getId() {
         return id;
     }

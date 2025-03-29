@@ -4,6 +4,7 @@
  */
 package college.tracker;
 
+import college.tracker.database.AssignmentDB;
 import college.tracker.database.AssignmentInfo;
 import college.tracker.database.ClassDB;
 import college.tracker.database.ClassInfo;
@@ -69,6 +70,17 @@ public class AssignmentGui {
                               
                    AssignmentInfo newAssignment = new AssignmentInfo(assignmentName, dueDate,"Pending", selectedClass.getId());
                    assignmentList.add(newAssignment);  // Add the new class to the ObservableList
+                   
+                   // adding the information to the database
+                   AssignmentDB assignmentDB = new AssignmentDB();
+                   
+                   // ensuring that if there are errors, it's displayed
+                   boolean assignmentAdded = assignmentDB.addAssignment(newAssignment);
+                   if (assignmentAdded == true) {
+                       System.out.println("Assignment added");
+                   } else {
+                       System.out.println("Adding assignment has failed");
+                   }
                }        
             }
         }   

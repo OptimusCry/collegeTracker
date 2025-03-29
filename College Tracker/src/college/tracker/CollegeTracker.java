@@ -1,6 +1,8 @@
 
 package college.tracker;
 
+import college.tracker.database.AssignmentDB;
+import college.tracker.database.AssignmentInfo;
 import college.tracker.database.ClassDB;
 import college.tracker.database.ClassInfo;
 import static college.tracker.database.connect.connect;
@@ -32,14 +34,9 @@ public class CollegeTracker extends Application {
         primaryStage.setTitle("College Tracker");
         primaryStage.setScene(scene);
         primaryStage.show();
-           
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
         
-        
-         List<ClassInfo> classes = ClassDB.getClasses();
+        List<ClassInfo> classes = ClassDB.getClasses();
+        List<AssignmentInfo> assignments = AssignmentDB.getAssignments();
         
         // Check if we are getting any classes back
         if (classes.isEmpty()) {
@@ -50,7 +47,23 @@ public class CollegeTracker extends Application {
                 System.out.println("Class Name: " + classInfo.getName());
             }
         }
+        
+        if (assignments.isEmpty()) {
+            System.out.println("No Assignments found in the database.");
+        } else {
+            System.out.println("Assignments fetched from the database:");
+            for (AssignmentInfo Assignment : assignments) {
+                System.out.println("Assignment Name: " + Assignment.getName());
+            }
+        }
     
+    }
+       
+    
+    public static void main(String[] args) {
+        launch(args);
+        
+        
     }
     
     

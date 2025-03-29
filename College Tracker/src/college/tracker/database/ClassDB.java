@@ -21,23 +21,15 @@ public class ClassDB {
     public boolean addClass(ClassInfo classInfo) throws SQLException {
         
         // query
-        String query = "INSERT INTO classes (class_name, start_date, end_date, color, status) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO classes (name, start_date, end_date, color, status) VALUES (?, ?, ?, ?, ?)";
         
         // trying for a connection
          try (Connection connection = connect.connect(); 
             PreparedStatement ps = connection.prepareStatement(query)) {
-            
              
-             // if connection fails, print out that it failedd
-            if (connection == null) {
-                System.out.println("Failed to get a connection, try again");
-            }
-            
-            
-            // if connection works proceed to get all the needed info from db
             ps.setString(1, classInfo.getName());
-            ps.setDate(2, java.sql.Date.valueOf(classInfo.getStartDate()));
-            ps.setDate(3, java.sql.Date.valueOf(classInfo.getEndDate()));
+            ps.setString(2, classInfo.getStartDate().toString());
+            ps.setString(3, classInfo.getEndDate().toString());
             ps.setString(4, classInfo.toHexString());
             ps.setString(5, classInfo.getStatus());
             
@@ -46,14 +38,29 @@ public class ClassDB {
             return rowsInserted > 0;
             
         } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error adding class " + e.getMessage());
             return false;
         }
             
     } // end of adding classes
     
     public boolean deleteClass(ClassInfo classInfo) throws SQLException {
+        String query = "DELETE FROM classes WHERE id = ?";
         
-        return false;
+        try (Connection connection = connect.connect(); 
+            PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setInt(1, classInfo.getId());
+            
+            int rowsDeleted = ps.executeUpdate(); // this returns amount of rows inserted
+
+            return rowsDeleted > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         
     }
     
@@ -111,7 +118,7 @@ public class ClassDB {
     
     public void classComboBox(ComboBox<ClassInfo> comboBox) {
         
-         List<ClassInfo> classCombo = new ArrayList<>();
+        List<ClassInfo> classCombo = new ArrayList<>();
         
         // Making a query to retrieve classinfo from db
         String query = "SELECT id, name FROM classes";

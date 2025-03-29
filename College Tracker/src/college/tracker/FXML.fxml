@@ -360,7 +360,7 @@
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                            </padding>
                         </Button>
-                        <ButtonBar layoutX="20.0" layoutY="60.0" prefHeight="40.0" prefWidth="878.0">
+                        <ButtonBar layoutX="-14.0" layoutY="54.0" prefHeight="46.0" prefWidth="1028.0">
                           <buttons>
                             <Button fx:id="btnJanuary" mnemonicParsing="false" onAction="#changeMonth" text="JAN" />
                               <Button fx:id="btnFebruary" layoutX="573.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="FEB" />
@@ -373,11 +373,11 @@
                               <Button fx:id="btnSeptember" layoutX="590.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="SEP" />
                               <Button fx:id="btnOctober" layoutX="30.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="OCT" />
                               <Button fx:id="btnNovember" layoutX="98.0" layoutY="17.0" minWidth="31.0" mnemonicParsing="false" onAction="#changeMonth" prefHeight="26.0" text="NOV" />
-                              <Button fx:id="btnDecember" layoutX="830.0" layoutY="17.0" minWidth="31.0" mnemonicParsing="false" onAction="#changeMonth" prefHeight="26.0" text="DEC" />
+                              <Button fx:id="btnDecember" layoutX="830.0" layoutY="17.0" minWidth="49.0" mnemonicParsing="false" onAction="#changeMonth" prefHeight="26.0" text="DEC" />
                           </buttons>
                         </ButtonBar>
-                     </children></AnchorPane>
-              
+                     </children>
+              </AnchorPane>
             </content>
           </Tab>
             <Tab text="To-Do">
