@@ -5,16 +5,20 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -451,10 +455,204 @@
               </content>
             </Tab>
             <Tab text="Timetable">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="676.0" prefWidth="1028.0">
+            <children>
+                <VBox id="tblClasses" alignment="TOP_CENTER" fillWidth="false" layoutX="139.0" layoutY="75.0" prefHeight="515.0" prefWidth="750.0" spacing="20.0">
+                    <children>
+                        <!-- Header Label -->
+                        <HBox alignment="CENTER">
+                            <children>
+                                <Label id="lblDate" fx:id="lblDate" alignment="CENTER" contentDisplay="BOTTOM" style="-fx-background-color: #055b1b;" text="This Week" textFill="WHITE">
+                                    <font>
+                                        <Font name="Britannic Bold" size="32.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </HBox>
+                              <HBox prefHeight="50.0" prefWidth="28.0" />
+
+                        <!-- Days of the Week -->
+                        <HBox alignment="CENTER" prefHeight="67.0" prefWidth="750.0" spacing="15.0">
+                            <children>
+                                <!-- Sunday -->
+                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Label text="S">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Circle fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                                    </children>
+                                </VBox>
+                                <!-- Monday -->
+                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Label text="M">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Circle fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                                    </children>
+                                </VBox>
+                                <!-- Tuesday -->
+                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Label text="T">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Circle fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                                    </children>
+                                </VBox>
+                                <!-- Wednesday -->
+                                <VBox alignment="TOP_CENTER" prefHeight="113.0" prefWidth="94.0">
+                                    <children>
+                                        <Label text="W">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Circle fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                                    </children>
+                                </VBox>
+                                <!-- Thursday -->
+                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Label text="T">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Circle fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                                    </children>
+                                </VBox>
+                                <!-- Friday -->
+                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Label text="F">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Circle fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                                    </children>
+                                </VBox>
+                                <!-- Saturday -->
+                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Label text="S">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Label>
+                                        <Circle fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Content Split Pane -->
+                        <SplitPane dividerPositions="0.5" prefHeight="419.0" prefWidth="750.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="295.0" prefWidth="371.0">
+                                    <children>
+                                        <VBox prefHeight="355.0" prefWidth="374.0">
+                                             <children>
+                                                <Label prefHeight="49.0" prefWidth="65.0" text="Sunday:" underline="true">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea prefHeight="74.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextArea>
+                                                <Label prefHeight="20.0" prefWidth="71.0" text="Monday:" underline="true">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea prefHeight="86.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextArea>
+                                                <Label prefHeight="28.0" prefWidth="75.0" text="Tuesday:" underline="true">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextArea>
+                                                <Label prefHeight="28.0" prefWidth="98.0" text="Wednesday:" underline="true">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea prefHeight="85.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextArea>
+                                             </children></VBox>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="400.0">
+                                    <children>
+                                        <VBox layoutY="-1.0" prefHeight="355.0" prefWidth="371.0">
+                                             <children>
+                                                <Label prefHeight="63.0" prefWidth="79.0" text="Thursday:" underline="true">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea prefHeight="60.0" prefWidth="371.0" text="Class:&#10;Event:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextArea>
+                                                <Label prefHeight="56.0" prefWidth="54.0" text="Friday:" underline="true">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea prefHeight="57.0" prefWidth="371.0" text="Class:&#10;Event:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextArea>
+                                                <Label prefHeight="56.0" prefWidth="76.0" text="Saturday:" underline="true">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextArea prefHeight="67.0" prefWidth="371.0" text="Class:&#10;Event:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </TextArea>
+                                             </children></VBox>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </content>
+</Tab>
             <Tab text="Settings">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
