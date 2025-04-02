@@ -1,6 +1,8 @@
 
 package college.tracker;
 
+import college.tracker.database.ToDoDB;
+import college.tracker.info.ToDoInfo;
 import java.io.IOException;
 import java.net.URL;
 
@@ -14,25 +16,26 @@ import java.util.Map;
 import java.time.Duration;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 
 public class FXMLController implements Initializable {
@@ -82,39 +85,23 @@ public class FXMLController implements Initializable {
     
     // start of to do
     @FXML
-    private TableColumn<?, ?> toDoClass;
+    private TableColumn<ToDoInfo, String> toDoClass;
     @FXML
-    private TableColumn<?, ?> toDoAssignmentName;
+    private TableColumn<ToDoInfo, String> toDoAssignmentName;
     @FXML
-    private TableColumn<?, ?> toDoDueDate;
+    private TableColumn<ToDoInfo, LocalDate> toDoDueDate;
     @FXML
-    private TableColumn<?, ?> toDoCompleted;
+    private TableColumn<ToDoInfo, Boolean> toDoCompleted;
     @FXML
-    private TableColumn<?, ?> toDoDelete;
-    @FXML
-    private Button addAssignment;
-    @FXML
-    private Button btn_5min;
-    @FXML
-    private Button btn_10min;
-    @FXML
-    private Button btn_15min;
-    @FXML
-    private Button btn_30min;
-    @FXML
-    private Button btn_45min;
-    @FXML
-    private Button btn_60min;
-    @FXML
-    private Button btn_120min;
-    @FXML
-    private Button btn_start;
-    @FXML
-    private Button btn_stop;
-    @FXML
-    private Button btn_reset;
-    
+    private TableColumn<ToDoInfo, Void> toDoDelete;
 
+    
+    private final ObservableList<ToDoInfo> toDoList = FXCollections.observableArrayList();
+    @FXML
+ 
+    private TableView<ToDoInfo> toDoTable;
+    @FXML
+ 
     /**
      * Initializes the controller class.
      * @param url
@@ -123,17 +110,122 @@ public class FXMLController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        // homepage
+        
+        
         myClassGui = new ClassGui();
-        myAssignmentGui = new AssignmentGui();
+        
         addClassButton.setOnAction(event -> onAddClassButtonClick(event));
         studyTimer = new myTimer(() -> updateTimer());
         
+        // calendar
         currentMonth = YearMonth.of(2025, 1);
         updateCalendar();
         
-       
+        // -------------
+        
+        // To Do
+        
+        toDoList.addAll(ToDoDB.getAllToDo());
+        toDoTable.setItems(toDoList);
+        
+        
+        // Binding the variables to the right columns
+        toDoClass.setCellValueFactory(cellData -> cellData.getValue().getClassName());
+        toDoAssignmentName.setCellValueFactory(cellData -> cellData.getValue().getAssignmentName());
+        toDoDueDate.setCellValueFactory(cellData -> cellData.getValue().getDueDate());
+        
+        myAssignmentGui = new AssignmentGui(this);
+         
+        // have to set up special column for the completed and delete column because 
+        // scenebuilder doesn't support it
+        toDoCompleted.setCellFactory(column -> {
+            return new TableCell<ToDoInfo, Boolean>() {
+                private final CheckBox checkBox = new CheckBox(); // making a toggleable checkbox
+            
+                @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    // if the checkBox is empty, removing it by setting the graphic to null
+                    if (empty) {
+                        setGraphic(null);
+                        
+                    // else binding the checkbox and if status is completed, checking it
+                    
+                    } else {
+                        ToDoInfo toDo = getTableRow().getItem();
+                        
+                        if (toDo != null) { // Check if 'toDo' is not null
+                            
+                        // Bind the checkbox to the "completed" status of ToDoInfo
+                        checkBox.setSelected("completed".equals(toDo.getStatus().get())); // need the get() here because we are using wrapper classes and it's incompatible otherwise (spent an hour on figuring out why it wasn't working)
+                        
+                        // Handle checkbox toggle
+                        checkBox.setOnAction(e -> {
+                            
+                            // Update the status when checkbox is clicked
+                            String newStatus = checkBox.isSelected() ? "completed" : "pending";
+                            toDo.setStatus(newStatus);
+                            boolean success = ToDoDB.updateStatus(toDo.getId().get(), newStatus);
+                            System.out.println("Updating status for " + toDo.getAssignmentName() + " to " + newStatus + ": " + success);
+                            
+            
+                        });
+                    }
+
+                        setGraphic(checkBox); // setting the checkbox in the cell
+                    }
+                }
+            };
+        });
+        
+        toDoDelete.setCellFactory(column -> {
+            return new TableCell<ToDoInfo, Void>() {
+                private final Button deleteButton = new Button("Delete");
+                
+                {
+                    deleteButton.setOnAction(event -> {
+                        ToDoInfo toDo = getTableRow().getItem();
+                        
+                        // if the object isn't null, remove from db, if successful remove from the ui
+                        if (toDo != null) {
+                            boolean success = ToDoDB.deleteAssignment(toDo);
+                            
+                            if (success) {
+                                toDoList.remove(toDo);
+                            } else {
+                                System.out.println("Wasn't able to delete the assignment from the database");
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(deleteButton);
+                    }
+                } 
+            };
+        });
     }
+       
     
+    // Start of code for the homepage 
+    
+    
+    
+    
+    
+    
+    
+    // End of code for the homepage
     
     // handling code for the class and assignment guis
     
@@ -143,6 +235,7 @@ public class FXMLController implements Initializable {
     
     // Start of code for the To Do List
     
+    @FXML
     public void onAddAssignmentButtonClick(ActionEvent event) {
         myAssignmentGui.handleAddAssignment();
     }
@@ -409,6 +502,12 @@ public class FXMLController implements Initializable {
         events.putIfAbsent(date, new ArrayList<>());
         events.get(date).add(title);
         updateCalendar();
+    }
+    
+    public void updateTableView() {
+        toDoList.clear();
+        toDoList.addAll(ToDoDB.getAllToDo());
+        toDoTable.refresh(); 
     }
     
 }

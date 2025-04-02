@@ -8,6 +8,8 @@ import college.tracker.database.AssignmentDB;
 import college.tracker.database.AssignmentInfo;
 import college.tracker.database.ClassDB;
 import college.tracker.database.ClassInfo;
+import college.tracker.database.ToDoDB;
+import college.tracker.info.ToDoInfo;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,13 @@ import javafx.scene.layout.VBox;
  */
 public class AssignmentGui {
     
-    private final ObservableList<AssignmentInfo> assignmentList = FXCollections.observableArrayList();
+    private final FXMLController controller;
+    
+     public AssignmentGui(FXMLController controller) { // needed to refresh the table after the add assignment button was pressed, but couldn't directly, so I had to looked up how to pass by reference
+        this.controller = controller;
+    }
+    
+    private final ObservableList<ToDoInfo> toDoList = FXCollections.observableArrayList();
     
     public void handleAddAssignment() {
         
@@ -65,19 +73,20 @@ public class AssignmentGui {
                LocalDate dueDate = assignmentDueDate.getValue();
    
 
-               // Validating thatend date are not null, start date also has to be before end date
+               // Validating that due date are not null, selected class and name
                if (selectedClass != null && assignmentName != null && assignmentDueDate != null) {
                               
-                   AssignmentInfo newAssignment = new AssignmentInfo(assignmentName, dueDate,"Pending", selectedClass.getId());
-                   assignmentList.add(newAssignment);  // Add the new class to the ObservableList
+                   ToDoInfo newAssignment = new ToDoInfo(assignmentName, dueDate,"Pending", selectedClass.getId());
                    
                    // adding the information to the database
-                   AssignmentDB assignmentDB = new AssignmentDB();
+                   ToDoDB toDoDB = new ToDoDB();
+       
                    
                    // ensuring that if there are errors, it's displayed
-                   boolean assignmentAdded = assignmentDB.addAssignment(newAssignment);
+                   boolean assignmentAdded = toDoDB.addAssignment(newAssignment);
                    if (assignmentAdded == true) {
-                       System.out.println("Assignment added");
+                        System.out.println("Assignment added: " + newAssignment.getAssignmentName().get());
+                        controller.updateTableView(); 
                    } else {
                        System.out.println("Adding assignment has failed");
                    }

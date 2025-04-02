@@ -390,7 +390,7 @@
                      <children>
                         <ScrollPane layoutX="116.0" layoutY="197.0" prefHeight="329.0" prefWidth="795.0">
                            <content>
-                              <TableView prefHeight="326.0" prefWidth="795.0">
+                              <TableView fx:id="toDoTable" prefHeight="326.0" prefWidth="795.0">
                                 <columns>
                                   <TableColumn fx:id="toDoClass" minWidth="200.0" prefWidth="88.6666921377182" text="Class" />
                                   <TableColumn fx:id="toDoAssignmentName" minWidth="150.0" prefWidth="114.66661834716797" text="Assignment Name" />
