@@ -15,8 +15,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
@@ -78,7 +78,7 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Label fx:id="sunLabel" prefHeight="90.0" prefWidth="121.0" text="         SUN" textAlignment="CENTER">
+                                    <Label fx:id="sunLabel" alignment="CENTER" prefHeight="90.0" prefWidth="121.0" text="SUN" textAlignment="CENTER">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -87,7 +87,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Label fx:id="monLabel" prefHeight="133.0" prefWidth="115.0" text="        MON">
+                                    <Label fx:id="monLabel" alignment="CENTER" prefHeight="133.0" prefWidth="115.0" text="MON">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -96,7 +96,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                                  <children>
-                                    <Label fx:id="tueLabel" prefHeight="103.0" prefWidth="128.0" text="        TUE">
+                                    <Label fx:id="tueLabel" alignment="CENTER" prefHeight="103.0" prefWidth="128.0" text="TUE">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -105,7 +105,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
                                  <children>
-                                    <Label fx:id="wedLabel" prefHeight="96.0" prefWidth="168.0" text="        WED">
+                                    <Label fx:id="wedLabel" alignment="CENTER" prefHeight="96.0" prefWidth="168.0" text="WED">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -114,7 +114,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4">
                                  <children>
-                                    <Label fx:id="thuLabel" prefHeight="93.0" prefWidth="162.0" text="        THU">
+                                    <Label fx:id="thuLabel" alignment="CENTER" prefHeight="93.0" prefWidth="162.0" text="THU">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -123,7 +123,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5">
                                  <children>
-                                    <Label fx:id="friLabel" prefHeight="112.0" prefWidth="159.0" text="        FRI">
+                                    <Label fx:id="friLabel" alignment="CENTER" prefHeight="112.0" prefWidth="159.0" text="FRI">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -132,7 +132,7 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6">
                                  <children>
-                                    <Label fx:id="satLabel" prefHeight="92.0" prefWidth="128.0" text="        SAT">
+                                    <Label fx:id="satLabel" alignment="CENTER" prefHeight="92.0" prefWidth="128.0" text="SAT">
                                        <font>
                                           <Font size="22.0" />
                                        </font>
@@ -458,7 +458,7 @@
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="676.0" prefWidth="1028.0">
             <children>
-                <VBox id="tblClasses" alignment="TOP_CENTER" fillWidth="false" layoutX="139.0" layoutY="75.0" prefHeight="515.0" prefWidth="750.0" spacing="20.0">
+                <VBox id="tblClasses" alignment="TOP_CENTER" fillWidth="false" layoutX="139.0" layoutY="75.0" prefHeight="646.0" prefWidth="750.0" spacing="20.0">
                     <children>
                         <!-- Header Label -->
                         <HBox alignment="CENTER">
@@ -563,14 +563,14 @@
                             <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="295.0" prefWidth="371.0">
                                     <children>
-                                        <VBox prefHeight="355.0" prefWidth="374.0">
+                                        <VBox prefHeight="419.0" prefWidth="374.0">
                                              <children>
                                                 <Label prefHeight="49.0" prefWidth="65.0" text="Sunday:" underline="true">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="74.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -580,7 +580,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="86.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                <TextArea prefHeight="86.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -590,7 +590,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -600,7 +600,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="85.0" prefWidth="374.0" text="Class:&#10;Event:">
+                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -610,14 +610,14 @@
                                 </AnchorPane>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="400.0">
                                     <children>
-                                        <VBox layoutY="-1.0" prefHeight="355.0" prefWidth="371.0">
+                                        <VBox layoutY="-1.0" prefHeight="422.0" prefWidth="371.0">
                                              <children>
                                                 <Label prefHeight="63.0" prefWidth="79.0" text="Thursday:" underline="true">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="60.0" prefWidth="371.0" text="Class:&#10;Event:">
+                                                <TextArea prefHeight="103.0" prefWidth="371.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -627,7 +627,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="57.0" prefWidth="371.0" text="Class:&#10;Event:">
+                                                <TextArea prefHeight="105.0" prefWidth="371.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -637,7 +637,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="67.0" prefWidth="371.0" text="Class:&#10;Event:">
+                                                <TextArea prefHeight="104.0" prefWidth="371.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
