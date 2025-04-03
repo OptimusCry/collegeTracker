@@ -369,7 +369,7 @@
                             <Button fx:id="btnJanuary" mnemonicParsing="false" onAction="#changeMonth" text="JAN" />
                               <Button fx:id="btnFebruary" layoutX="573.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="FEB" />
                               <Button fx:id="btnMarch" layoutX="493.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="MAR" />
-                              <Button fx:id="btnApril" layoutX="413.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="ARI" />
+                              <Button fx:id="btnApril" layoutX="413.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="APR" />
                               <Button fx:id="btnMay" layoutX="333.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="MAY" />
                               <Button fx:id="btnJune" layoutX="253.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="JUN" />
                               <Button fx:id="btnJuly" layoutX="173.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeMonth" text="JUL" />
