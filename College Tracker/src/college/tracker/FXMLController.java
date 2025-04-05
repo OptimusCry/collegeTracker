@@ -1,7 +1,10 @@
 
 package college.tracker;
 
+import college.tracker.database.HomePageDB;
 import college.tracker.database.ToDoDB;
+import college.tracker.info.ColorCell;
+import college.tracker.info.HomePageInfo;
 import college.tracker.info.ToDoInfo;
 import java.io.IOException;
 import java.net.URL;
@@ -36,9 +39,32 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 
 public class FXMLController implements Initializable {
+    
+    
+    // Start of code for HomePage
+    @FXML
+    private TableColumn<HomePageInfo, String> classNameTable;
+    
+    @FXML
+    private TableColumn<HomePageInfo, LocalDate> classStartDateTable;
+    
+    @FXML
+    private TableColumn<HomePageInfo, LocalDate> classEndDateTable;
+    
+    @FXML
+    private TableColumn<HomePageInfo, Color> classColorTable;
+    
+    @FXML
+    private final ObservableList<HomePageInfo> homePageList = FXCollections.observableArrayList();
+    
+    @FXML
+    private TableView<HomePageInfo> homePageTable;
+    
+    // End of code for Homepage
     
     // CALENDAR
     
@@ -95,13 +121,13 @@ public class FXMLController implements Initializable {
     @FXML
     private TableColumn<ToDoInfo, Void> toDoDelete;
 
-    
+    @FXML
     private final ObservableList<ToDoInfo> toDoList = FXCollections.observableArrayList();
+    
     @FXML
- 
     private TableView<ToDoInfo> toDoTable;
-    @FXML
- 
+
+  
     /**
      * Initializes the controller class.
      * @param url
@@ -112,9 +138,19 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         // homepage
+        classNameTable.setCellValueFactory(cellData -> cellData.getValue().getName());
+        classStartDateTable.setCellValueFactory(cellData -> cellData.getValue().getStartDate());
+        classEndDateTable.setCellValueFactory(cellData -> cellData.getValue().getEndDate());
+        
+        // Color is special
+        classColorTable.setCellValueFactory(cellData -> cellData.getValue().getColor());
+        classColorTable.setCellFactory(cellData -> new ColorCell());
         
         
-        myClassGui = new ClassGui();
+        homePageList.addAll(HomePageDB.getAllHomePage());
+        homePageTable.setItems(homePageList);
+        
+        myClassGui = new ClassGui(this);
         
         addClassButton.setOnAction(event -> onAddClassButtonClick(event));
         studyTimer = new myTimer(() -> updateTimer());
@@ -502,6 +538,12 @@ public class FXMLController implements Initializable {
         events.putIfAbsent(date, new ArrayList<>());
         events.get(date).add(title);
         updateCalendar();
+    }
+    
+    public void updateHomePageTable() {
+        homePageList.clear();
+        homePageList.addAll(HomePageDB.getAllHomePage());
+        homePageTable.refresh();
     }
     
     public void updateTableView() {

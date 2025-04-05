@@ -4,7 +4,6 @@
  */
 package college.tracker;
 
-import college.tracker.database.AssignmentDB;
 import college.tracker.database.ClassDB;
 import college.tracker.database.ClassInfo;
 import java.sql.SQLException;
@@ -27,6 +26,12 @@ import javafx.scene.paint.Color;
  * @author kayla
  */
 public class ClassGui {
+    
+    private final FXMLController controller;
+    
+    public ClassGui(FXMLController controller) { // needed to refresh the table after the add class button was pressed, but couldn't directly, so I had to looked up how to pass by reference
+        this.controller = controller;
+    }
     
     private final ObservableList<ClassInfo> classList = FXCollections.observableArrayList();
     
@@ -76,7 +81,7 @@ public class ClassGui {
             // Validating that start date and end date are not null, start date also has to be before end date
             if (startDate != null && endDate != null && startDate.isBefore(endDate)) {
              
-                ClassInfo newClass = new ClassInfo(className, startDate, endDate, color, "active");
+                ClassInfo newClass = new ClassInfo(className, startDate, endDate, color, "Active");
                 classList.add(newClass);  // Add the new class to the ObservableList
                 
                 // Converting color to hex string to save to the database
@@ -90,19 +95,15 @@ public class ClassGui {
                    try {
                        boolean classAdded = classDB.addClass(newClass);
                        if (classAdded == true) {
-                           System.out.println("Class added");
+                          
+                           controller.updateHomePageTable();
                        } else {
                            System.out.println("Adding class has failed");
                        }
                    } catch (SQLException e) {
                        e.printStackTrace();
                        System.out.println("Error: " + e.getMessage());
-                   }
-
-                System.out.println("Class Name: " + className);
-                System.out.println("Selected Color: " + color);
-                
-              
+                   }              
             }
         }   
     }   

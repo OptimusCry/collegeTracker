@@ -33,12 +33,12 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextField layoutX="440.0" layoutY="109.0" text="Hello, today is..." />
-                        <TableView layoutX="187.0" layoutY="160.0" prefHeight="320.0" prefWidth="653.0">
+                        <TableView fx:id="homePageTable" layoutX="187.0" layoutY="160.0" prefHeight="320.0" prefWidth="653.0">
                           <columns>
-                            <TableColumn id="classNameTable" prefWidth="200.0" text="Class Name" />
-                            <TableColumn id="classStartDateTable" prefWidth="150.0" text="Start Date" />
-                              <TableColumn id="classEndDateTable" prefWidth="150.0" text="End Date" />
-                              <TableColumn id="classColorTable" prefWidth="150.0" text="Color" />
+                            <TableColumn fx:id="classNameTable" prefWidth="200.0" text="Class Name" />
+                            <TableColumn fx:id="classStartDateTable" prefWidth="150.0" text="Start Date" />
+                              <TableColumn fx:id="classEndDateTable" prefWidth="150.0" text="End Date" />
+                              <TableColumn fx:id="classColorTable" prefWidth="150.0" text="Color" />
                           </columns>
                         </TableView>
                         <Button id="addClassButton" fx:id="addClassButton" layoutX="789.0" layoutY="495.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="50.0" text="+">

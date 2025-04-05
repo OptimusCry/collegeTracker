@@ -64,7 +64,7 @@ public class ClassDB {
         
     }
     
-    public static  List<ClassInfo> getClasses() {
+    public static List<ClassInfo> getClasses() {
         
         // Making array for the classes, this function gets the classes and their info
         List<ClassInfo> classes = new ArrayList<>();
