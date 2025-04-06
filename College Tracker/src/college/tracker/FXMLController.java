@@ -552,6 +552,31 @@ public class FXMLController implements Initializable {
         toDoTable.refresh(); 
     }
     
+    @FXML
+    public class FXMLController implements Initializable {
+        
+    
+    private TableView<ClassMeeting> timetableTable;
+    private TableColumn<ClassMeeting, String> classNameCol;
+    private TableColumn<ClassMeeting, String> classDayCol;
+    private TableColumn<ClassMeeting, String> startTimeCol;
+    private TableColumn<ClassMeeting, String> endTimeCol;
+    
+    private ObservableList<ClassMeeting> classMeetings = FXCollections.observableArrayList();
+    
+    public void initialize(URL url, ResourceBundle rb) {
+      classNameCol.setCellValueFactory(new PropertyValueFactory<>("className"));
+      classDayCol.setCellValueFactory(new PropertyValueFactory<>("classDay"));
+      startTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+      endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+      
+      timetableTable.setItems(classMeetings);
+    }
+    public void addMeeting(ClassMeeting meeting) {
+        classMeetings.add(meeting);
+    }
+    
+ }
 }
    
 
