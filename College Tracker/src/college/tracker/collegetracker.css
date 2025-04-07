@@ -8,6 +8,22 @@ Author     : saman
 -fx-font-size: 18px;
                                             
 }
+.tab{
+-fx-background-color: white;
+-fx-background-radius: 35px;
+-fx-border-radius: 35px;
+-fx-border-color:#046A38;
+-fx-border-width: 3px;
+-fx-text-fill: #046A38;
+-fx-font-size: 36px;
+-fx-padding: 15px;
+
+}
+.tab:active{
+-fx-background-color: #046A38;
+-fx-text: white;
+}
+/*Study Timer*/
 #btn_5min{
 -fx-background-color: white;
 -fx-font-size: 36px;
@@ -75,8 +91,6 @@ Author     : saman
 }
 #btn_stop{    
 -fx-background-color: white;
--fx-border-color: #138742;
--fx-border-width: 4px;
 -fx-font-size: 18px;
 -fx-text-fill: #138742;
 -fx-background-radius: 25px;
@@ -92,19 +106,6 @@ Author     : saman
 -fx-background-radius: 25px;
 -fx-border-radius: 25px;     
 }
-
-
-.tab{
--fx-background-color: white;
--fx-background-radius: 35px;
--fx-border-radius: 35px; 
-
--fx-text-fill: #046A38;
-}
-.tab:active{
--fx-background-color: #046A38;
--fx-text: white;
-}
 #timer_output{
 -fx-background-radius: 15px;
 -fx-border-radius: 15px; 
@@ -112,4 +113,220 @@ Author     : saman
 #timer_input{
  -fx-background-radius: 15px;
 -fx-border-radius: 15px;    
+}
+/*Calendar*/
+#btnJanuary{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnFebruary{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnMarch{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnApril{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnMay{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnJune{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnJuly{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnAugust{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnSeptember{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnOctober{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnNovember{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}
+#btnDecember{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+}.weekday{
+    -fx-background-color: #046A38;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: white;
+}
+#calendarGrid{
+   -fx-background-color: white;
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10px; 
+   
+}
+#addEventButton{
+   -fx-background-color: white;
+   -fx-font-size: 18px;
+   -fx-text-fill: #138742;
+   -fx-background-radius: 25px;
+   -fx-border-radius: 25px;   
+}
+/*To-Do*/
+#toDoHeader{
+   -fx-font-size: 72px;
+   -fx-text-fill: white;
+}
+#toDoTable{
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10px;  
+}
+#toDoClass{
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10px; 
+
+}
+#toDoAssignmentName{
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10px; 
+
+}
+#toDoDueDate{
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10px; 
+  
+}
+#toDoCompleted{
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10px; 
+    
+}
+#toDoDelete{
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10px;        
+}
+#addAssignment{
+   -fx-background-color: white;
+   -fx-font-size: 18px;
+   -fx-text-fill: #138742;
+   -fx-background-radius: 25px;
+   -fx-border-radius: 25px; 
+}
+/*Timetable*/
+#lblDate{
+   -fx-font-size: 72px;
+   -fx-text-fill: white;    
+}
+#timetableBox{
+   -fx-font-family: 'Berlin Sans FB', sans-serif; 
+   -fx-text-fill: #046A38;
+   -fx-padding: 10px;    
+}
+#timetableSunday{
+  -fx-background-color: white;   
+  -fx-padding:15px;
+  -fx-font-size: 36px;
+  -fx-text-fill: #138742;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px; 
+}
+#timetableMonday{
+  -fx-background-color: white;   
+  -fx-padding:15px;
+  -fx-font-size: 36px;
+  -fx-text-fill: #138742;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px; 
+}
+#timetableTuesday{
+  -fx-background-color: white;   
+  -fx-padding:15px;
+  -fx-font-size: 36px;
+  -fx-text-fill: #138742;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px; 
+}
+#timetableWednesday{
+  -fx-background-color: white;   
+  -fx-padding:15px;
+  -fx-font-size: 36px;
+  -fx-text-fill: #138742;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px; 
+}
+#timetableThursday{
+  -fx-background-color: white;   
+  -fx-padding:15px;
+  -fx-font-size: 36px;
+  -fx-text-fill: #138742;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px; 
+}
+#timetableFriday{
+  -fx-background-color: white;   
+  -fx-padding:15px;
+  -fx-font-size: 36px;
+  -fx-text-fill: #138742;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px; 
+}
+#timetableSaturday{
+  -fx-background-color: white;   
+  -fx-padding:15px;
+  -fx-font-size: 36px;
+  -fx-text-fill: #138742;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px; 
+}
+/*Home*/
+#classNameTable{
+  -fx-font-family: 'Berlin Sans FB', sans-serif;    
+}
+#addClassButton{
+   -fx-background-color: white;
+   -fx-font-size: 18px;
+   -fx-text-fill: #138742;
+   -fx-background-radius: 15px;
+   -fx-border-radius: 15px;     
 }
