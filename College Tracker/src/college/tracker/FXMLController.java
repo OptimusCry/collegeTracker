@@ -552,32 +552,84 @@ public class FXMLController implements Initializable {
         toDoTable.refresh(); 
     }
     
-    @FXML
+    
     public class FXMLController implements Initializable {
         
-    
-    private TableView<ClassMeeting> timetableTable;
-    private TableColumn<ClassMeeting, String> classNameCol;
-    private TableColumn<ClassMeeting, String> classDayCol;
-    private TableColumn<ClassMeeting, String> startTimeCol;
-    private TableColumn<ClassMeeting, String> endTimeCol;
-    
-    private ObservableList<ClassMeeting> classMeetings = FXCollections.observableArrayList();
-    
+        @FXML
+        private GridPane calendarGrid;
+        
+        private final Map<String, Integer> dayToColumn = Map.of(
+            "Sunday", 0,
+            "Monday", 1,
+            "Tuesday", 2,
+            "Wednesday", 3,
+            "Thursday", 4,
+            "Friday", 5,
+            "Saturday", 6
+        );
+        
+        private final Map<String, Integer> timeToRow = Map.of(
+        "08:00", 0,
+        "09:00", 1,
+        "10:00", 2,
+        "11:00", 3,
+        "12:00", 4,
+        "13:00", 5,
+        "14:00", 6,
+        "15:00", 7,
+        "16:00", 8,
+        "17:00", 9
+        );
+        public void addMeetingToGrid(ClassMeeting meeting, GridPane gridPane) {
+        String day = meeting.getClassDay();
+        String time = meeting.getStartTime();
+        String title = meeting.getClassName();
+        String type = meeting.getType();
+
+        int col = dayToColumn.getOrDefault(day, -1);
+        int row = timeToRow.getOrDefault(time, -1);
+
+        if (col == -1 || row == -1) return; // invalid day/time
+
+        Label label = new Label(title);
+
+        // Styles based on category
+        switch (type.toLowerCase()) {
+            case "class":
+                label.setStyle("-fx-background-color: #a1cfff; -fx-text-fill: black; -fx-padding: 5px;");
+                break;
+            case "event":
+                label.setStyle("-fx-background-color: #ffdd99; -fx-text-fill: black; -fx-padding: 5px;");
+                break;
+            case "assignment":
+                label.setStyle("-fx-background-color: #ff9999; -fx-text-fill: black; -fx-padding: 5px;");
+                break;
+        }
+
+        label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getColumnIndex(node) == col &&
+                GridPane.getRowIndex(node) == row &&
+                node instanceof VBox) {
+                VBox cell = (VBox) node;
+                cell.getChildren().add(label);
+                break;
+            }
+        }
+    }
+
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
-      classNameCol.setCellValueFactory(new PropertyValueFactory<>("className"));
-      classDayCol.setCellValueFactory(new PropertyValueFactory<>("classDay"));
-      startTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-      endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-      
-      timetableTable.setItems(classMeetings);
-    }
-    public void addMeeting(ClassMeeting meeting) {
-        classMeetings.add(meeting);
-    }
+        List<ClassMeeting> allMeetings = loadYourMeetings();
+        for (ClassMeeting meeting : allMeetings) {
+            addMeetingToGrid(meeting, calendarGrid);
+        }
+    }    
+}
     
  }
-}
+
    
 
 
