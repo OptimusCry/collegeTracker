@@ -15,7 +15,7 @@ Author     : saman
 -fx-border-color:#046A38;
 -fx-border-width: 3px;
 -fx-text-fill: #046A38;
--fx-font-size: 36px;
+-fx-font-size: 32px;
 -fx-padding: 15px;
 
 }
@@ -175,7 +175,7 @@ Author     : saman
    -fx-font-family: 'Berlin Sans FB', sans-serif; 
    -fx-text-fill: #046A38;
 }.weekday{
-    -fx-background-color: #046A38;
+   -fx-background-color: #046A38;
    -fx-font-family: 'Berlin Sans FB', sans-serif; 
    -fx-text-fill: white;
 }
@@ -198,21 +198,18 @@ Author     : saman
 /*To-Do*/
 #toDoHeader{
    -fx-font-size: 72px;
-   -fx-text-fill: white;
+   -fx-text-fill: white; 
+   -fx-font-family: 'Berlin Sans FB', sans-serif;  
 }
 #toDoTable{
    -fx-font-family: 'Berlin Sans FB', sans-serif; 
    -fx-text-fill: #046A38;
    -fx-padding: 10px;
-   -fx-background-radius: 10px;
-   -fx-border-radius: 10px;  
 }
 #toDoClass{
    -fx-font-family: 'Berlin Sans FB', sans-serif; 
    -fx-text-fill: #046A38;
    -fx-padding: 10px;
-   -fx-background-radius: 10px;
-   -fx-border-radius: 10px; 
 
 }
 #toDoAssignmentName{
@@ -256,7 +253,8 @@ Author     : saman
 /*Timetable*/
 #lblDate{
    -fx-font-size: 72px;
-   -fx-text-fill: white;    
+   -fx-text-fill: white; 
+   -fx-font-family: 'Berlin Sans FB', sans-serif;    
 }
 #timetableBox{
    -fx-font-family: 'Berlin Sans FB', sans-serif; 
@@ -329,4 +327,10 @@ Author     : saman
    -fx-text-fill: #138742;
    -fx-background-radius: 15px;
    -fx-border-radius: 15px;     
+}
+/*Settings*/
+#settingsHeader{
+   -fx-font-size: 72px;
+   -fx-text-fill: white; 
+   -fx-font-family: 'Berlin Sans FB', sans-serif;    
 }
