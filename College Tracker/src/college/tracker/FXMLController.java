@@ -2,9 +2,11 @@
 package college.tracker;
 
 import college.tracker.database.HomePageDB;
+import college.tracker.database.ThemeDB;
 import college.tracker.database.ToDoDB;
 import college.tracker.info.ColorCell;
 import college.tracker.info.HomePageInfo;
+import college.tracker.info.ThemeInfo;
 import college.tracker.info.ToDoInfo;
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -42,7 +45,20 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 
+
 public class FXMLController implements Initializable {
+    
+    private Stage primaryStage;
+    
+    private Scene scene;
+    
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+    
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
     
     
     // Start of code for HomePage
@@ -126,6 +142,15 @@ public class FXMLController implements Initializable {
     
     @FXML
     private TableView<ToDoInfo> toDoTable;
+    
+    @FXML
+    private Button addEventOrAssignmentBtn;
+
+    private EventOrAssignmentGui eventOrAssignmentGui;
+    
+    @FXML
+    private ComboBox<ThemeInfo> themeComboBox;
+
 
   
     /**
@@ -250,6 +275,36 @@ public class FXMLController implements Initializable {
                 } 
             };
         });
+        
+        eventOrAssignmentGui = new EventOrAssignmentGui(this);
+      
+        themeComboBox.getItems().addAll(ThemeDB.getAllThemes());
+
+        
+        List<ThemeInfo> themes = ThemeDB.getAllThemes();
+        themeComboBox.getItems().setAll(themes);
+            
+        ThemeInfo selectedTheme = ThemeDB.getSelectedTheme();
+        if (selectedTheme != null) {
+            themeComboBox.getSelectionModel().select(selectedTheme);
+        }
+
+        themeComboBox.setOnAction(e -> {
+            ThemeInfo selected = themeComboBox.getSelectionModel().getSelectedItem();
+
+            if (selected != null) {
+                boolean success = ThemeDB.updateSelectedTheme(selected.getName());
+
+                if (success) {
+                    System.out.println("Theme applied " + selected);
+
+                    changeThemeStyle(selected.getName(), primaryStage);
+                } else {
+                    System.out.println("Failed to apply theme");
+                }
+            }
+        });
+
     }
        
     
@@ -551,6 +606,48 @@ public class FXMLController implements Initializable {
         toDoList.addAll(ToDoDB.getAllToDo());
         toDoTable.refresh(); 
     }
+    
+    @FXML
+    public void addEventOrAssignmentBtnClicked(ActionEvent event) {
+        eventOrAssignmentGui.showAddItemDialog();
+        
+    }
+
+    public void changeThemeStyle(String themeName, Stage primaryStage) {
+        if (primaryStage == null) {
+        System.err.println("Primary stage is null!");
+        return;
+    }
+
+    Scene scene = primaryStage.getScene();
+    if (scene == null) {
+        System.err.println("Scene is null!");
+        return;
+    }
+
+    // Clear any existing stylesheets
+    scene.getStylesheets().clear();
+
+    // Construct the path to the CSS file for the selected theme
+    String css = "/css/" + themeName + ".css";
+
+    try {
+        // Try loading the CSS file
+        URL resource = getClass().getResource(css);
+        if (resource != null) {
+            scene.getStylesheets().add(resource.toExternalForm());
+            System.out.println("Theme applied: " + themeName);
+        } else {
+            System.err.println("CSS file not found: " + css);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // Debug: Print applied stylesheets to check if it's working
+    System.out.println("Applied stylesheets: " + scene.getStylesheets());
+    }
+
     
 }
    
