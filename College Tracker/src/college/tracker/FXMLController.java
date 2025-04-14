@@ -705,21 +705,10 @@ public class FXMLController implements Initializable {
     System.out.println("Applied stylesheets: " + scene.getStylesheets());
     }
 
-     @FXML private TextArea sundayClassArea, mondayClassArea, tuesdayClassArea,
-                       wednesdayClassArea, thursdayClassArea, fridayClassArea, saturdayClassArea;
-
 @FXML private TextArea sundayAssignmentArea, mondayAssignmentArea, tuesdayAssignmentArea,
                        wednesdayAssignmentArea, thursdayAssignmentArea, fridayAssignmentArea, saturdayAssignmentArea;
 
 public void displaySampleData() {
-    // Classes
-    sundayClassArea.setText("Math 101");
-    mondayClassArea.setText("English");
-    tuesdayClassArea.setText("Spanish 300");
-    wednesdayClassArea.setText("Art Studies");
-    thursdayClassArea.setText("Math 200");
-    fridayClassArea.setText("Biology");
-    saturdayClassArea.setText("Chemistry");
 
     // Assignments
     sundayAssignmentArea.setText("English 2");
