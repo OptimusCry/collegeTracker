@@ -554,7 +554,7 @@
                         </HBox>
 
                         <!-- Content Split Pane -->
-                        <SplitPane dividerPositions="0.5" prefHeight="419.0" prefWidth="750.0">
+                        <SplitPane dividerPositions="0.5" prefHeight="478.0" prefWidth="750.0">
                             <items>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="295.0" prefWidth="371.0">
                                     <children>
@@ -565,7 +565,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
+                                                <TextArea fx:id="sundayClassArea" prefHeight="91.0" prefWidth="374.0" text="Class: Math 101&#10;Event:&#10;Assignment: English 2">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -575,7 +575,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="86.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
+                                                <TextArea fx:id="mondayClassArea" prefHeight="101.0" prefWidth="374.0" text="Class: English&#10;Event:&#10;Assignment: Spanish Assignment 1">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -585,7 +585,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
+                                                <TextArea fx:id="tuesdayClassArea" prefHeight="91.0" prefWidth="374.0" text="Class: Spanish 300&#10;Event:&#10;Assignment: Art Assignment 1">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -595,7 +595,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="91.0" prefWidth="374.0" text="Class:&#10;Event:&#10;Assignment:">
+                                                <TextArea fx:id="wednesdayClassArea" prefHeight="110.0" prefWidth="374.0" text="Class: Art Studies&#10;Event:&#10;Assignment: Assignment 10">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -612,7 +612,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="103.0" prefWidth="371.0" text="Class:&#10;Event:&#10;Assignment:">
+                                                <TextArea fx:id="thursdayClassArea" prefHeight="103.0" prefWidth="371.0" text="Class: Math 200&#10;Event:&#10;Assignment: Watercolor Painting">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -622,7 +622,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="105.0" prefWidth="371.0" text="Class:&#10;Event:&#10;Assignment:">
+                                                <TextArea fx:id="fridayClassArea" prefHeight="105.0" prefWidth="371.0" text="Class: Biology&#10;&#9;Chemistry&#10;Event:&#10;Assignment: Assignment 1">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -632,7 +632,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea prefHeight="104.0" prefWidth="371.0" text="Class:&#10;Event:&#10;Assignment:">
+                                                <TextArea fx:id="saturdayClassArea" prefHeight="104.0" prefWidth="371.0" text="Class:&#10;Event:&#10;Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
