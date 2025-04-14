@@ -4,14 +4,13 @@ package college.tracker;
 import college.tracker.database.AssignmentDB;
 import college.tracker.info.AssignmentInfo;
 import college.tracker.database.ClassDB;
-import college.tracker.database.ClassInfo;
+import college.tracker.info.ClassInfo;
 import college.tracker.database.ThemeDB;
 import static college.tracker.database.connect.connect;
 import college.tracker.info.ThemeInfo;
-import java.lang.ModuleLayer.Controller;
+import java.io.File;
 import java.util.List;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +29,12 @@ public class CollegeTracker extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
+        
+        System.out.println("Classpath:");
+for (String path : System.getProperty("java.class.path").split(File.pathSeparator)) {
+    System.out.println(path);
+}
+
         connect();
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/college/tracker/FXML.fxml"));

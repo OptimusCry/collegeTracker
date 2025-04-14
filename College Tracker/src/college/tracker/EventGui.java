@@ -11,12 +11,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,8 +72,6 @@ public class EventGui {
     
    
     public void handleAddEvent() {
-        
-        resetErrorLabels();
         
         TextField eventNameInput = new TextField();
         TextField eventDescriptionInput = new TextField();
@@ -142,14 +137,16 @@ public class EventGui {
             String endTime = eventEndInput.getText();
             String location = eventLocationInput.getText();
             
-            boolean isValid = validateForm(name, startDate, startTime, endTime, isRecurring ? 1 : 0, selectedFrequency);
+            boolean isValid = validateForm(name, startDate, startTime, endTime, endDate,
+                                       eventNameInput, eventStartDay, eventStartInput,
+                                       eventEndDay, eventEndInput);
             if (!isValid) {
                 nextBtn.setDisable(false);
                 return;
             }
 
-            LocalDateTime startDateTime = parseDateTime(startDate, startTime, new Label());
-            LocalDateTime endDateTime = parseDateTime(endDate, endTime, new Label());
+            LocalDateTime startDateTime = parseDateTime(startDate, startTime);
+            LocalDateTime endDateTime = parseDateTime(endDate, endTime);
 
             if (startDateTime == null || endDateTime == null) {
                 nextBtn.setDisable(false);
@@ -169,6 +166,11 @@ public class EventGui {
                     selectedDays = frequencyGui.getSelectedDays();
                     System.out.println("Selected Frequency: " + selectedFrequency);
                     System.out.println("Selected Days: " + selectedDays);
+                    
+                    if (selectedFrequency == null || selectedFrequency.isEmpty()) {
+                        frequencyGui.showWarningMessage("Please selected a frequency for the recurring event");
+                        return;
+                    }
                                         
                     saveEvent(savedEventInfo, selectedFrequency, selectedDays);
                     eventDialog.close();
@@ -203,16 +205,18 @@ public class EventGui {
             String location = eventLocationInput.getText();
             int isRecurring = yesBtn.isSelected() ? 1 : 0;
             
-            Label errorLabel = new Label();
-            LocalDateTime startDateTime = parseDateTime(startDate, startTime, errorLabel);
-            LocalDateTime endDateTime = parseDateTime(endDate, endTime, errorLabel);
+            LocalDateTime startDateTime = parseDateTime(startDate, startTime);
+            LocalDateTime endDateTime = parseDateTime(endDate, endTime);
             
             if (startDateTime == null || endDateTime == null) {
                 return;
             }
             
             // Validating
-            boolean isValid = validateForm(name, startDate, startTime, endTime, isRecurring, selectedFrequency);          
+            boolean isValid = validateForm(name, startDate, startTime, endTime, endDate,
+                                       eventNameInput, eventStartDay, eventStartInput,
+                                       eventEndDay, eventEndInput);
+            
             if (!isValid) {
                 return;
             }
@@ -231,14 +235,6 @@ public class EventGui {
         String location = eventInfo.getLocation().get();
         int isRecurring = eventInfo.getIsRecurring().get(); 
         String status = eventInfo.getStatus().get();
-                
-        boolean isValid = validateForm(name, startDateTime.toLocalDate(), 
-                                        startDateTime.toLocalTime().toString(), 
-                                        endDateTime.toLocalTime().toString(), 
-                                        isRecurring, selectedFrequency);
-        if (!isValid) {
-            return;
-        }
 
         System.out.println("Adding event: " + name);
         
@@ -257,16 +253,12 @@ public class EventGui {
         eventList.add(fullEventInfo);
 
         if (isRecurring == 1 && selectedFrequency != null) {
-            handleRecurrence(eventId, selectedFrequency, startDateTime.toLocalDate(), 
-                              endDateTime.toLocalDate(), startDateTime.toLocalTime(), 
-                              endDateTime.toLocalTime(), name, description, location, isRecurring, selectedDays);
+            handleRecurrence(eventId, selectedFrequency, startDateTime.toLocalDate(), endDateTime.toLocalDate(), selectedDays);
             
         }
     }
         
-    private void handleRecurrence(int eventId, String frequency, LocalDate startDate, LocalDate endDate,
-                               LocalTime startTime, LocalTime endTime,
-                               String name, String description, String location, int isRecurring, List<String> selectedDays) {
+    private void handleRecurrence(int eventId, String frequency, LocalDate startDate, LocalDate endDate, List<String> selectedDays) {
         
         System.out.println("in handleRecurrence ");
         System.out.println("Frequency: " + frequency);
@@ -281,7 +273,7 @@ public class EventGui {
 
                 while (!currentDate.isAfter(endDate)) {
                     String day = currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-                    createRecurringEvent(currentDate, startTime, endTime, name, description, location, isRecurring, eventId, frequency, day, endDate);
+                    createRecurringEvent(currentDate, frequency, day, endDate, eventId);
                     currentDate = currentDate.plusDays(1);
                 }
             }
@@ -294,7 +286,7 @@ public class EventGui {
                     LocalDate eventDate = getNextWeekdayFrom(startDate, day);
 
                     while (!eventDate.isAfter(endDate)) {
-                        createRecurringEvent(eventDate, startTime, endTime, name, description, location, isRecurring, eventId, frequency, day, endDate);
+                        createRecurringEvent(eventDate, frequency, day, endDate, eventId);
                         eventDate = eventDate.plusWeeks(1);
                     }
                 }
@@ -308,54 +300,20 @@ public class EventGui {
                     LocalDate eventDate = getNextWeekdayFrom(startDate, day);
 
                     while (!eventDate.isAfter(endDate)) {
-                        createRecurringEvent(eventDate, startTime, endTime, name, description, location, isRecurring, eventId, frequency, day, endDate);
+                        createRecurringEvent(eventDate, frequency, day, endDate, eventId);
                         eventDate = eventDate.plusWeeks(2); 
                     }
                 }
             }
 
-            /*case "Monthly" -> {
-                for (String selectedDay : selectedDays) {
-                // Parse the selected weekday (e.g., "Wednesday", "Thursday")
-                DayOfWeek targetDay = DayOfWeek.valueOf(selectedDay.toUpperCase());
-
-                // Calculate the next occurrence of the selected weekday in the next month
-                LocalDate nextMonthOccurrence = getNextWeekdayInNextMonth(startDate, targetDay);
-
-                    // Check if the calculated date is within the range and create event
-                    while (nextMonthOccurrence != null && !nextMonthOccurrence.isAfter(endDate)) {
-                        // Call the method to create the recurring event for the calculated date
-                        createRecurringEvent(nextMonthOccurrence, startTime, endTime, name, description, location, isRecurring, eventId, frequency, selectedDay, endDate);
-
-                        // Calculate the next occurrence in the subsequent month
-                        nextMonthOccurrence = getNextWeekdayInNextMonth(nextMonthOccurrence.plusMonths(1), targetDay);
-                    }
-                }
-            break;
-            }*/
+            // Want to implement monthly here
         }
         
-        System.out.println("After the switch statement");
     }
 
-    
-    private void createRecurringEvent(LocalDate date, LocalTime startTime, LocalTime endTime, String name, String description, String location, int isRecurring, int eventId, String frequency, String dayOfWeek, LocalDate endDate) {
+    private void createRecurringEvent(LocalDate date, String frequency, String dayOfWeek, LocalDate endDate, int eventId) {
         
-        System.out.println("Now in createRecurringEvent");
-        LocalDateTime startDateTime = LocalDateTime.of(date, startTime);
-        LocalDateTime endDateTime = LocalDateTime.of(date, endTime);
-
-        System.out.println("After parsing dates");
-        
-            System.out.println("Prior to saving recurring");
-            RecurringInfo recurringInfo = new RecurringInfo(0, frequency, dayOfWeek, date, endDate, eventId);
-            System.out.println("Adding recurrence:");
-            System.out.println("  Frequency: " + recurringInfo.getFrequency().get());
-            System.out.println("  Day of Week: " + recurringInfo.getDayOfWeek().get());
-            System.out.println("  Start Date: " + recurringInfo.getStartDate().get());
-            System.out.println("  End Date: " + recurringInfo.getEndDate().get());
-            System.out.println("  Event ID: " + recurringInfo.getEventId().get());
-        
+        RecurringInfo recurringInfo = new RecurringInfo(0, frequency, dayOfWeek, date, endDate, eventId);
         boolean recurrenceSuccess = RecurringDB.addRecurring(recurringInfo);
         
         if (recurrenceSuccess) {
@@ -364,45 +322,79 @@ public class EventGui {
             System.out.println("Recurring event failed");
         }
     }
-    
-    private void resetErrorLabels() {
-        errorNameLabel.setText("");
-        errorStartDateLabel.setText("");
-        errorStartTimeLabel.setText("");
-        errorEndTimeLabel.setText("");
-        errorFrequencyLabel.setText("");
-    }
-    
-    private boolean validateForm(String name, LocalDate startDate, String startTime, String endTime, int isRecurring, String frequency) {
+   
+    private boolean validateForm(String name, LocalDate startDate, String startTimeStr, String endTimeStr, 
+                             LocalDate endDate, TextField eventNameInput, DatePicker eventStartDay, 
+                             TextField eventStartInput, DatePicker eventEndDay, TextField eventEndInput) {
         boolean isValid = true;
 
-        // Check if the event name is empty
+        // Validate event name
         if (name == null || name.trim().isEmpty()) {
-            System.out.println("Validation failed: Event name is required.");
+            eventNameInput.setStyle("-fx-border-color: red;");
+            errorNameLabel.setText("Event name cannot be empty.");
             isValid = false;
+        } else {
+            clearStyle(eventNameInput);
+            errorNameLabel.setText("");
         }
 
-        // Check if the start date is null
+        // Validate start date
         if (startDate == null) {
-            System.out.println("Validation failed: Start date is required.");
+            eventStartDay.setStyle("-fx-border-color: red;");
+            errorStartDateLabel.setText("Start date is required.");
             isValid = false;
+        } else {
+            clearStyle(eventStartDay);
+            errorStartDateLabel.setText("");
         }
 
-        // Check if the start time is empty
-        if (startTime == null || startTime.trim().isEmpty()) {
-            System.out.println("Validation failed: Start time is required.");
+        // Validate end date
+        if (endDate == null) {
+            eventEndDay.setStyle("-fx-border-color: red;");
+            errorStartDateLabel.setText("End date is required.");
             isValid = false;
+        } else {
+            clearStyle(eventEndDay);
+            errorEndTimeLabel.setText("");
+            // Ensure end date is after start date
+            if (startDate != null && endDate.isBefore(startDate)) {
+                eventEndDay.setStyle("-fx-border-color: red;");
+                errorEndTimeLabel.setText("End date must be after start date.");
+                isValid = false;
+            }
         }
 
-        // Check if the end time is empty
-        if (endTime == null || endTime.trim().isEmpty()) {
-            System.out.println("Validation failed: End time is required.");
+        // Validate start time and end time
+        LocalDateTime startDateTime = parseDateTime(startDate, startTimeStr);
+        LocalDateTime endDateTime = parseDateTime(endDate, endTimeStr);
+
+        if (startDateTime == null) {
+            eventStartInput.setStyle("-fx-border-color: red;");
+            errorStartTimeLabel.setText("Invalid start time.");
             isValid = false;
+        } else {
+            clearStyle(eventStartInput);
+            errorStartTimeLabel.setText("");
         }
 
-        // Print overall validation result
-        System.out.println("Validation result: " + isValid);
+        if (endDateTime == null) {
+            eventEndInput.setStyle("-fx-border-color: red;");
+            errorEndTimeLabel.setText("Invalid end time.");
+            isValid = false;
+        } else {
+            clearStyle(eventEndInput);
+            errorEndTimeLabel.setText("");
+        }
+
         return isValid;
+    }
+
+    private void clearStyle(TextField inputField) {
+        inputField.setStyle("");
+    }
+
+    private void clearStyle(DatePicker datePicker) {
+        datePicker.setStyle("");
     }
     
     private void intitialDialogBox(VBox dialogVBox, TextField eventNameInput, TextField eventDescriptionInput, 
@@ -411,10 +403,10 @@ public class EventGui {
                                           TextField eventLocationInput, RadioButton yesBtn, RadioButton noBtn) {
         
         dialogVBox.getChildren().addAll(
-                new Label("Event Name:"), eventNameInput, errorNameLabel,
+                new Label("Event Name:"), eventNameInput,
                 new Label("Event Description:"), eventDescriptionInput,
-                new Label("Event Start Date:"), eventStartDay, errorStartDateLabel,
-                new Label("Event Start Time:"), eventStartInput, errorStartTimeLabel,
+                new Label("Event Start Date:"), eventStartDay,
+                new Label("Event Start Time:"), eventStartInput,
                 new Label("Event End Date:"), eventEndDay,
                 new Label("Event End Time:"), eventEndInput,
                 new Label("Event Location:"), eventLocationInput,
@@ -422,14 +414,21 @@ public class EventGui {
         );
     }
     
-    private LocalDateTime parseDateTime(LocalDate date, String time, Label errorLabel) {
+    private LocalDateTime parseDateTime(LocalDate date, String time) {
+        
+        time = time.replaceAll("\\s+", "");
+        
+        if (time.length() == 4) {
+            time = "0" + time;
+        }
+        
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         
         try {
             LocalTime localTime = LocalTime.parse(time, timeFormatter);
             return LocalDateTime.of(date, localTime);
         } catch (DateTimeParseException e) {
-            errorLabel.setText("Invalid time format (use HH:mm)");
+           
             return null;
         }
         
@@ -445,15 +444,5 @@ public class EventGui {
 
         return startDate.plusDays(daysToAdd);
     }
-    
-    /*private LocalDate getNextWeekdayInNextMonth(LocalDate startDate, DayOfWeek targetDay) {
-        // Get the first day of the next month
-        LocalDate firstDayOfNextMonth = startDate.plusMonths(1).withDayOfMonth(1);
-
-        // Find the first occurrence of the targetDay in the next month
-        LocalDate nextOccurrence = firstDayOfNextMonth.with(TemporalAdjusters.nextOrSame(targetDay));
-
-        return nextOccurrence;
-    }*/
-      
+          
 }

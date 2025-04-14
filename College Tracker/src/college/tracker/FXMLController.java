@@ -1,21 +1,21 @@
 
 package college.tracker;
 
-import college.tracker.info.AssignmentInfo;
 import college.tracker.database.AssignmentDB;
+import college.tracker.database.ClassDB;
 import college.tracker.database.EventDB;
 import college.tracker.database.HomePageDB;
 import college.tracker.database.RecurringDB;
 import college.tracker.database.ThemeDB;
 import college.tracker.database.ToDoDB;
 import college.tracker.info.AssignmentInfo;
+import college.tracker.info.ClassInfo;
 import college.tracker.info.ColorCell;
 import college.tracker.info.EventInfo;
 import college.tracker.info.HomePageInfo;
 import college.tracker.info.RecurringInfo;
 import college.tracker.info.ThemeInfo;
 import college.tracker.info.ToDoInfo;
-import java.io.IOException;
 import java.net.URL;
 
 import java.time.DayOfWeek;
@@ -32,8 +32,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -48,11 +46,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 
 public class FXMLController implements Initializable {
@@ -72,6 +76,9 @@ public class FXMLController implements Initializable {
     
     // Start of code for HomePage
     @FXML
+    private TextField todaysDate;
+    
+    @FXML
     private TableColumn<HomePageInfo, String> classNameTable;
     
     @FXML
@@ -82,6 +89,9 @@ public class FXMLController implements Initializable {
     
     @FXML
     private TableColumn<HomePageInfo, Color> classColorTable;
+    
+    @FXML 
+    private TableColumn<HomePageInfo, Void> classDelete;
     
     @FXML
     private final ObservableList<HomePageInfo> homePageList = FXCollections.observableArrayList();
@@ -111,9 +121,7 @@ public class FXMLController implements Initializable {
     @FXML private Button btnJuly, btnAugust, btnSeptember, btnOctober, btnNovember, btnDecember;
     
     private final Map<LocalDate, List<String>> events = new HashMap<>(); 
-    private YearMonth currentMonth;
-    
-        
+
    // start of code for the study timer
     
     @FXML
@@ -154,14 +162,13 @@ public class FXMLController implements Initializable {
     
     @FXML
     private Button addEventOrAssignmentBtn;
-    
-
+   
     private EventOrAssignmentGui eventOrAssignmentGui;
     
     @FXML
     private ComboBox<ThemeInfo> themeComboBox;
 
-
+    private YearMonth currentMonth;
   
     /**
      * Initializes the controller class.
@@ -173,6 +180,12 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         // homepage
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy", Locale.ENGLISH);
+        String formattedDate = today.format(formatter);
+        
+        todaysDate.setText("Todays date is " + formattedDate);
+       
         classNameTable.setCellValueFactory(cellData -> cellData.getValue().getName());
         classStartDateTable.setCellValueFactory(cellData -> cellData.getValue().getStartDate());
         classEndDateTable.setCellValueFactory(cellData -> cellData.getValue().getEndDate());
@@ -191,9 +204,9 @@ public class FXMLController implements Initializable {
         studyTimer = new myTimer(() -> updateTimer());
         
         // calendar
-        
-        currentMonth = YearMonth.of(2025, 1);
+        currentMonth = YearMonth.now();
         updateCalendar();
+        highlightSelectedMonth();
         
         // -------------
         
@@ -288,6 +301,59 @@ public class FXMLController implements Initializable {
         });
         
         eventOrAssignmentGui = new EventOrAssignmentGui(this);
+        
+        FXMLController self = this;
+        
+        classDelete.setCellFactory(column -> {
+            return new TableCell<HomePageInfo, Void>() {
+                private final Button deleteButtonHomepage = new Button("Delete");
+                
+                {
+                    deleteButtonHomepage.setOnAction(event -> {
+                        HomePageInfo classHome = getTableRow().getItem();
+
+                        if (classHome != null) {
+                            
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Delete Confirmation");
+                            alert.setHeaderText("Are you sure you want to delete this class?");
+                            alert.setContentText("This will delete all assignments related to this class");
+                            
+                            Optional<ButtonType> result = alert.showAndWait();
+                            
+                            if (result.isPresent() && result.get() == ButtonType.OK) {
+                            
+                                try {
+                                    boolean success = HomePageDB.deleteClass(classHome);
+                                    
+                                    if (success) {
+                                        homePageList.remove(classHome); 
+                                        self.updateTableView();
+                                        updateCalendar();
+
+                                    } else {
+                                        System.out.println("Wasn't able to delete the class from the database.");
+                                    }
+                                } catch (SQLException e) {
+                                    e.printStackTrace(); 
+                                }
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(deleteButtonHomepage);
+                    }
+                } 
+            };
+        });
       
         themeComboBox.getItems().addAll(ThemeDB.getAllThemes());
 
@@ -542,7 +608,7 @@ public class FXMLController implements Initializable {
         updateCalendar();
     }
 
-    private void updateCalendar() {
+    public void updateCalendar() {
         events.clear();
         populateCalendar();
         
@@ -650,8 +716,39 @@ public class FXMLController implements Initializable {
      private void addEventToMap(LocalDate date, String eventName) {
         events.computeIfAbsent(date, k -> new ArrayList<>()).add(eventName);
     }
-    
-    
+     
+     private void highlightSelectedMonth() {
+ 
+        btnJanuary.setStyle("");
+        btnFebruary.setStyle("");
+        btnMarch.setStyle("");
+        btnApril.setStyle("");
+        btnMay.setStyle("");
+        btnJune.setStyle("");
+        btnJuly.setStyle("");
+        btnAugust.setStyle("");
+        btnSeptember.setStyle("");
+        btnOctober.setStyle("");
+        btnNovember.setStyle("");
+        btnDecember.setStyle("");
+
+        // Add highlight to the selected button
+        switch (currentMonth.getMonthValue()) {
+            case 1 -> btnJanuary.setStyle("-fx-background-color: lightgreen;");
+            case 2 -> btnFebruary.setStyle("-fx-background-color: lightgreen;");
+            case 3 -> btnMarch.setStyle("-fx-background-color: lightgreen;");
+            case 4 -> btnApril.setStyle("-fx-background-color: lightgreen;");
+            case 5 -> btnMay.setStyle("-fx-background-color: lightgreen;");
+            case 6 -> btnJune.setStyle("-fx-background-color: lightgreen;");
+            case 7 -> btnJuly.setStyle("-fx-background-color: lightgreen;");
+            case 8 -> btnAugust.setStyle("-fx-background-color: lightgreen;");
+            case 9 -> btnSeptember.setStyle("-fx-background-color: lightgreen;");
+            case 10 -> btnOctober.setStyle("-fx-background-color: lightgreen;");
+            case 11 -> btnNovember.setStyle("-fx-background-color: lightgreen;");
+            case 12 -> btnDecember.setStyle("-fx-background-color: lightgreen;");
+        }
+    }
+       
     public void updateHomePageTable() {
         homePageList.clear();
         homePageList.addAll(HomePageDB.getAllHomePage());

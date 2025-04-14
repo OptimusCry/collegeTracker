@@ -1,6 +1,7 @@
 
 package college.tracker.database;
 
+import college.tracker.info.ClassInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +46,7 @@ public class ClassDB {
             
     } // end of adding classes
     
-    public boolean deleteClass(ClassInfo classInfo) throws SQLException {
+    public static boolean deleteClass(ClassInfo classInfo) throws SQLException {
         String query = "DELETE FROM classes WHERE id = ?";
         
         try (Connection connection = connect.connect(); 

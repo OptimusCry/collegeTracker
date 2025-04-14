@@ -4,6 +4,7 @@
  */
 package college.tracker.database;
 
+import college.tracker.info.ClassInfo;
 import college.tracker.info.HomePageInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,6 +61,25 @@ public class HomePageDB {
                 
         return homePageList;
     
+    }
+    
+    public static boolean deleteClass(HomePageInfo homePageInfo) throws SQLException {
+        String query = "DELETE FROM classes WHERE id = ?";
+        
+        try (Connection connection = connect.connect(); 
+            PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setInt(1, homePageInfo.getId().get());
+            
+            int rowsDeleted = ps.executeUpdate(); // this returns amount of rows inserted
+
+            return rowsDeleted > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
     }
    
  

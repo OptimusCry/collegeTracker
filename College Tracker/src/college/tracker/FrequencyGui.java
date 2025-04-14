@@ -11,6 +11,8 @@ import javafx.stage.Modality;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 
 public class FrequencyGui {
     private final CheckBox mondayBox = new CheckBox("Monday");
@@ -49,10 +51,27 @@ public class FrequencyGui {
         frequencyDialog.getDialogPane().setContent(dialogPane);
         frequencyDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
+        Button okButton = (Button) frequencyDialog.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.setDisable(true);
+        
+        frequencyBox.setOnAction(e -> validateForm(okButton));
+        
+        for (CheckBox checkBox : List.of(mondayBox, tuesdayBox, wednesdayBox, thursdayBox, fridayBox, saturdayBox, sundayBox)) {
+            checkBox.setOnAction(e -> validateForm(okButton));
+        }
+
         // Show the dialog and wait for the result
         Optional<ButtonType> result = frequencyDialog.showAndWait();
-
+       
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            
+            boolean isValid = true;
+            
+            if (inValid(frequencyBox)) {
+                isValid = false;
+                showWarningMessage("Please select a frequency");
+            }
+            
             // Collect selected days if frequency is not "Daily"
             if (!"Daily".equals(frequencyBox.getValue())) {
                 if (mondayBox.isSelected()) selectedDays.add("Monday");
@@ -62,10 +81,24 @@ public class FrequencyGui {
                 if (fridayBox.isSelected()) selectedDays.add("Friday");
                 if (saturdayBox.isSelected()) selectedDays.add("Saturday");
                 if (sundayBox.isSelected()) selectedDays.add("Sunday");
+                
+                if (selectedDays.isEmpty()) {
+                    showErrorStyle(mondayBox, tuesdayBox, wednesdayBox, thursdayBox, fridayBox, saturdayBox, sundayBox);
+                    showWarningMessage("You must selected at least one day");
+                    isValid = false;
+                }
             }
-            return true; // Indicate success
+
+            if (isValid) {
+                resetStyles(mondayBox, tuesdayBox, wednesdayBox, thursdayBox, fridayBox, saturdayBox, sundayBox);
+                resetStyles(frequencyBox); 
+                return true; 
+            } else {
+                return false;
+            }
         }
-        return false; // Indicate cancellation
+        
+        return false; 
     }
 
     public void handleFrequencySelection(String selectedFrequency) {
@@ -102,5 +135,59 @@ public class FrequencyGui {
 
     public String getSelectedFrequency() {
         return frequencyBox.getValue();
+    }
+    
+    private boolean inValid(ComboBox<String> comboBox) {
+        if (comboBox.getValue() == null) {
+            comboBox.setStyle("-fx-border-color: red;");
+            return true;
+        }
+        comboBox.setStyle("");
+        return false;
+    }
+
+    private void showErrorStyle(CheckBox... checkBoxes) {
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setStyle("-fx-border-color: red");
+        }
+    }
+
+    private void resetStyles(CheckBox... checkBoxes) {
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setStyle(""); 
+        }
+    }
+
+    private void resetStyles(ComboBox<String> comboBox) {
+        comboBox.setStyle(""); 
+    }
+    
+    public void showWarningMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Validation Warning");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
+    private void validateForm(Button okButton) {
+        boolean hasFrequency = frequencyBox.getValue() != null;
+
+        if (!hasFrequency) {
+            okButton.setDisable(true);
+            return;
+        }
+
+        if ("Daily".equals(frequencyBox.getValue())) {
+            okButton.setDisable(false);
+            return;
+        }
+
+        boolean atLeastOneDaySelected = mondayBox.isSelected() || tuesdayBox.isSelected() ||
+                                        wednesdayBox.isSelected() || thursdayBox.isSelected() ||
+                                        fridayBox.isSelected() || saturdayBox.isSelected() ||
+                                        sundayBox.isSelected();
+
+        okButton.setDisable(!atLeastOneDaySelected);      
     }
 }

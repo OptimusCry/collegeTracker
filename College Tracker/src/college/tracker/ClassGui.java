@@ -5,12 +5,15 @@
 package college.tracker;
 
 import college.tracker.database.ClassDB;
-import college.tracker.database.ClassInfo;
+import college.tracker.info.ClassInfo;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
@@ -44,6 +47,11 @@ public class ClassGui {
         DatePicker classEndDate = new DatePicker();
   
         ColorPicker colorPicker = new ColorPicker();
+        
+        classNameInput.setPrefHeight(30);
+        classStartDate.setPrefHeight(30);
+        classEndDate.setPrefHeight(30);
+        colorPicker.setPrefHeight(30);
 
         // Setting prompt text
         classNameInput.setPromptText("Enter Class Name");
@@ -67,6 +75,38 @@ public class ClassGui {
                 new Label("Select Color:"), colorPicker);
         classNameDialog.getDialogPane().setContent(dialogVBox);
 
+        
+        final Button saveBtn = (Button) classNameDialog.getDialogPane().lookupButton(saveButton);
+        
+        saveBtn.addEventFilter(javafx.event.ActionEvent.ACTION, event -> {
+            boolean isValid = true;
+
+            if (inValid(classNameInput)) isValid = false;
+            if (inValid(classStartDate)) isValid = false;
+            if (inValid(classEndDate)) isValid = false;
+            if (inValid(colorPicker)) isValid = false;
+
+            if (classStartDate.getValue() != null && classEndDate.getValue() != null &&
+                !classStartDate.getValue().isBefore(classEndDate.getValue())) {
+                
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Invalid Dates");
+                alert.setHeaderText("End date cannot be before start date");
+                alert.setContentText("Please ensure that the end date is after the start date");
+                alert.showAndWait();
+                
+                classStartDate.setStyle("-fx-border-color: red;");
+                classEndDate.setStyle("-fx-border-color: red;");
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.consume(); 
+            } else {
+                resetStyles(classNameInput, classStartDate, classEndDate, colorPicker);
+            }
+        });
+        
         // Show the dialog and wait for the user input
         Optional<ButtonType> result = classNameDialog.showAndWait();
 
@@ -107,4 +147,51 @@ public class ClassGui {
             }
         }   
     }   
+    
+    private boolean inValid(TextField field) {
+        
+        if(field.getText().trim().isEmpty()) {
+            field.setStyle("-fx-border-color: red;");
+            return true;
+        }
+        
+        field.setStyle("");
+        return false;
+    }
+    
+    private boolean inValid(DatePicker picker) {
+        
+        if (picker.getValue() == null) {
+            picker.setStyle("-fx-border-color: red;");
+            return true;
+        }
+        
+        picker.setStyle("");
+        return false;
+    }
+    
+    private boolean inValid(ColorPicker picker) {
+        if (picker.getValue() == null || picker.getValue().equals(Color.WHITE)) {
+            picker.setStyle("-fx-border-color: red;");
+            return true;
+        }
+        picker.setStyle("");
+        return false;
+    }
+    
+    private void resetStyles(TextField classNameInput, DatePicker classStartDate, DatePicker classEndDate, ColorPicker colorPicker) {
+        // Check if the fields are valid before resetting the style
+        if (!inValid(classNameInput)) {
+            classNameInput.setStyle(""); 
+        }
+        if (!inValid(classStartDate)) {
+            classStartDate.setStyle("");
+        }
+        if (!inValid(classEndDate)) {
+            classEndDate.setStyle("");
+        }
+        if (!inValid(colorPicker)) {
+            colorPicker.setStyle(""); 
+        }
+    }
 }

@@ -1,10 +1,10 @@
 
 package college.tracker.database;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -17,7 +17,16 @@ public class connect {
         String url = "jdbc:sqlite:src/college/tracker/database/collegeTracker.db";
         
         try {
-            return DriverManager.getConnection(url);
+            Connection connection = DriverManager.getConnection(url);
+            
+            // Enable foreign key support in SQLite
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("PRAGMA foreign_keys = ON");
+            }
+            
+            return connection;
+            
+            
           
         } catch (SQLException e) {
             System.err.println("Connection failed " + e.getMessage());
