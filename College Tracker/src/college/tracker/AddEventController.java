@@ -1,4 +1,4 @@
-package college.tracker;
+/*package college.tracker;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -73,3 +73,5 @@ public class AddEventController {
         stage.close();
     }
 }
+
+*/

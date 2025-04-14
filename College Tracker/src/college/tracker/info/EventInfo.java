@@ -36,7 +36,7 @@ public class EventInfo {
         this.startTime = new SimpleObjectProperty<>(startTime);
         this.endTime = new SimpleObjectProperty<>(endTime);
         this.location = new SimpleStringProperty(location);
-        this.isRecurring = new SimpleIntegerProperty(0);
+        this.isRecurring = new SimpleIntegerProperty(isReccurring);
         this.status = new SimpleStringProperty(status);
     }
 
@@ -48,7 +48,7 @@ public class EventInfo {
         this.startTime = new SimpleObjectProperty<>(startTime);
         this.endTime = new SimpleObjectProperty<>(endTime);
         this.location = new SimpleStringProperty(location);
-        this.isRecurring = new SimpleIntegerProperty(0);
+        this.isRecurring = new SimpleIntegerProperty(isReccurring);
         this.status = new SimpleStringProperty(status);
     }
 

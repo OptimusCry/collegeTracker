@@ -1,6 +1,7 @@
 
 package college.tracker.database;
 
+import college.tracker.info.AssignmentInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

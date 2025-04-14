@@ -1,11 +1,18 @@
 
 package college.tracker;
 
+import college.tracker.info.AssignmentInfo;
+import college.tracker.database.AssignmentDB;
+import college.tracker.database.EventDB;
 import college.tracker.database.HomePageDB;
+import college.tracker.database.RecurringDB;
 import college.tracker.database.ThemeDB;
 import college.tracker.database.ToDoDB;
+import college.tracker.info.AssignmentInfo;
 import college.tracker.info.ColorCell;
+import college.tracker.info.EventInfo;
 import college.tracker.info.HomePageInfo;
+import college.tracker.info.RecurringInfo;
 import college.tracker.info.ThemeInfo;
 import college.tracker.info.ToDoInfo;
 import java.io.IOException;
@@ -38,12 +45,13 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
+import java.sql.SQLException;
 
 
 public class FXMLController implements Initializable {
@@ -145,6 +153,7 @@ public class FXMLController implements Initializable {
     
     @FXML
     private Button addEventOrAssignmentBtn;
+    
 
     private EventOrAssignmentGui eventOrAssignmentGui;
     
@@ -181,6 +190,7 @@ public class FXMLController implements Initializable {
         studyTimer = new myTimer(() -> updateTimer());
         
         // calendar
+        
         currentMonth = YearMonth.of(2025, 1);
         updateCalendar();
         
@@ -532,6 +542,9 @@ public class FXMLController implements Initializable {
     }
 
     private void updateCalendar() {
+        events.clear();
+        populateCalendar();
+        
         int daysInMonth = currentMonth.lengthOfMonth();
         DayOfWeek firstDayOfWeek = currentMonth.atDay(1).getDayOfWeek();
         int startDay = firstDayOfWeek.getValue() %7;
@@ -563,37 +576,80 @@ public class FXMLController implements Initializable {
                 dayLabels[index].setText(String.valueOf(i));
                 LocalDate date = currentMonth.atDay(i);
 
-                if (events.containsKey(date)) {          
-                    String eventText = String.join("\n", events.get(date));
-                    eventLabels[index].setText(eventText);
-                    eventLabels[index].setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                List<String> dayEvents = events.get(date);
+
+                if (dayEvents != null && !dayEvents.isEmpty()) {
+                    StringBuilder eventText = new StringBuilder();
+
+                    int displayLimit = 2;
+                    int countToShow = Math.min(displayLimit, dayEvents.size());
+
+                    for (int j = 0; j < countToShow; j++) {
+                        eventText.append("• ").append(dayEvents.get(j)).append("\n");
+                    }
+
+                    if (dayEvents.size() > displayLimit) {
+                        eventText.append("+").append(dayEvents.size() - displayLimit).append(" more");
+                    }
+
+                    eventLabels[index].setText(eventText.toString().trim());
+                    eventLabels[index].setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+
+                    // Tooltip with full list of events
+                    Tooltip tooltip = new Tooltip(String.join("\n", dayEvents));
+                    tooltip.setStyle("-fx-font-size: 20px;");
+                    Tooltip.install(eventLabels[index], tooltip);
                 }
             }
         }
     }
     
-    @FXML
-    public void openAddEvent() {
-         try {
-             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEvent.fxml"));
-             Parent root = loader.load();
+    private void populateCalendar() {
+        List<EventInfo> allEvents = EventDB.getAllEvent();
+        List<AssignmentInfo> allAssignments = AssignmentDB.getAssignments(); 
+        LocalDate startOfMonth = currentMonth.atDay(1);
+        LocalDate endOfMonth = currentMonth.atEndOfMonth();
 
-             AddEventController controller = loader.getController();
-             controller.setMainController(this);
+        // Handle Events (like you already have)
+        for (EventInfo event : allEvents) {
+            LocalDate eventDate = event.getStartTime().get().toLocalDate();
 
-             Stage stage = new Stage();
-             stage.setTitle("Add Event");
-             stage.setScene(new Scene(root));
-             stage.show();
-         } catch (IOException e) {
-         }
-     }
+            if (event.getIsRecurring().get() == 0) {
+                if (!eventDate.isBefore(startOfMonth) && !eventDate.isAfter(endOfMonth)) {
+                    addEventToMap(eventDate, event.getName().get());
+                }
+            } else {
+                try {
+                    List<RecurringInfo> recurs = RecurringDB.getRecurringEvents(event.getId().get());
 
-    public void addEvent(LocalDate date, String title) {
-        events.putIfAbsent(date, new ArrayList<>());
-        events.get(date).add(title);
-        updateCalendar();
+                    for (RecurringInfo recur : recurs) {
+                        LocalDate recurStart = recur.getStartDate().get();
+
+                        if (!recurStart.isBefore(startOfMonth) && !recurStart.isAfter(endOfMonth)) {
+                            addEventToMap(recurStart, event.getName().get());
+                        }
+                    }
+                    
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // 🔥 Now handle Assignments
+        for (AssignmentInfo assignment : allAssignments) {
+            LocalDate dueDate = assignment.getDueDate();
+
+            if (!dueDate.isBefore(startOfMonth) && !dueDate.isAfter(endOfMonth)) {
+                addEventToMap(dueDate, "[Due] " + assignment.getName()); 
+            }
+        }
     }
+    
+     private void addEventToMap(LocalDate date, String eventName) {
+        events.computeIfAbsent(date, k -> new ArrayList<>()).add(eventName);
+    }
+    
     
     public void updateHomePageTable() {
         homePageList.clear();

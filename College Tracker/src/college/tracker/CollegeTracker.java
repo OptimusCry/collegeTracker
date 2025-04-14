@@ -2,7 +2,7 @@
 package college.tracker;
 
 import college.tracker.database.AssignmentDB;
-import college.tracker.database.AssignmentInfo;
+import college.tracker.info.AssignmentInfo;
 import college.tracker.database.ClassDB;
 import college.tracker.database.ClassInfo;
 import college.tracker.database.ThemeDB;
