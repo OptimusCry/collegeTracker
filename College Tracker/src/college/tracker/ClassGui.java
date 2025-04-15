@@ -137,12 +137,9 @@ public class ClassGui {
                        if (classAdded == true) {
                           
                            controller.updateHomePageTable();
-                       } else {
-                           System.out.println("Adding class has failed");
-                       }
+                       } 
                    } catch (SQLException e) {
                        e.printStackTrace();
-                       System.out.println("Error: " + e.getMessage());
                    }              
             }
         }   

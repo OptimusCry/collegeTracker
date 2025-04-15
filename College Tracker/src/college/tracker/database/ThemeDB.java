@@ -59,21 +59,13 @@ public class ThemeDB {
 
             // if connection fails, print out that it failed
             if (connection == null) {
-                System.out.println("Failed to get a connection, try again");
                 return false;
             }
             
-            System.out.println("Setting selected theme to: " + themeName);
             resetPs.executeUpdate();
             updatePs.setString(1, themeName);
             
             int rowsUpdated = updatePs.executeUpdate();
-            
-            if (rowsUpdated > 0) {
-                System.out.println("Theme successfully updated in DB.");
-            } else {
-                System.out.println("No theme was updated. Theme name may not match any row.");
-            }
             
             return rowsUpdated > 0;
             

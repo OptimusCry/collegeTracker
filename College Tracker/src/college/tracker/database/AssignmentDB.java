@@ -22,11 +22,7 @@ public class AssignmentDB {
         
         try (Connection connection = connect.connect(); 
             PreparedStatement ps = connection.prepareStatement(query)) {
-            
-            if (connection == null) {
-                System.out.println("Failed to get a connection, try again");
-            }
-            
+                      
             ps.setString(1, assignment.getName());
             ps.setString(2, assignment.getDueDate().toString());
             ps.setString(3, assignment.getStatus());

@@ -121,7 +121,6 @@ public class EventGui {
         noBtn.setOnAction(e -> {
             selectedFrequency = null;
             selectedDays.clear();
-            System.out.println("Non-recurring event selected.");
         });
         
         Button nextBtn = new Button("Next");
@@ -164,19 +163,16 @@ public class EventGui {
                     selectedFrequency = frequencyGui.getSelectedFrequency();
                     frequencyGui.handleFrequencySelection(selectedFrequency);
                     selectedDays = frequencyGui.getSelectedDays();
-                    System.out.println("Selected Frequency: " + selectedFrequency);
-                    System.out.println("Selected Days: " + selectedDays);
                     
                     if (selectedFrequency == null || selectedFrequency.isEmpty()) {
                         frequencyGui.showWarningMessage("Please selected a frequency for the recurring event");
                         return;
                     }
-                                        
+                                 
                     saveEvent(savedEventInfo, selectedFrequency, selectedDays);
+                    controller.updateCalendar();
                     eventDialog.close();
-                } else {
-                    System.out.println("Frequency dialog cancelled");
-                }
+                } 
             } else {
                 saveEvent(savedEventInfo, null, null);
                 eventDialog.close();
@@ -223,6 +219,7 @@ public class EventGui {
             
             EventInfo eventInfo = new EventInfo(name, description, startDateTime, endDateTime, location, isRecurring, "scheduled");
             saveEvent(eventInfo, selectedFrequency, selectedDays);
+            controller.updateCalendar();
 
         }
     }
@@ -235,10 +232,6 @@ public class EventGui {
         String location = eventInfo.getLocation().get();
         int isRecurring = eventInfo.getIsRecurring().get(); 
         String status = eventInfo.getStatus().get();
-
-        System.out.println("Adding event: " + name);
-        
-        System.out.println("isRecurring value before saving: " + isRecurring);
 
         boolean success = EventDB.addEvent(eventInfo);
 
@@ -259,15 +252,11 @@ public class EventGui {
     }
         
     private void handleRecurrence(int eventId, String frequency, LocalDate startDate, LocalDate endDate, List<String> selectedDays) {
-        
-        System.out.println("in handleRecurrence ");
-        System.out.println("Frequency: " + frequency);
-        
+                
         if (frequency == null) return;
 
         LocalDate currentDate = startDate;
 
-        System.out.println("Now prior to the switch statement");
         switch (frequency) {
             case "Daily" -> {
 
@@ -279,7 +268,6 @@ public class EventGui {
             }
 
             case "Weekly" -> {
-                System.out.println("Inside the weekly switch case");
                 if (selectedDays == null || selectedDays.isEmpty()) return;
 
                 for (String day : selectedDays) {
@@ -293,7 +281,6 @@ public class EventGui {
             }
 
             case "Bi-weekly" -> {
-                System.out.println("Inside the bi-weekly switch case");
                 if (selectedDays == null || selectedDays.isEmpty()) return;
 
                 for (String day : selectedDays) {

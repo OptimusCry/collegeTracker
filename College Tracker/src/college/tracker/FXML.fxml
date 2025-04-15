@@ -32,7 +32,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="todaysDate" AnchorPane.leftAnchor="350.0" layoutX="440.0" prefWidth="320.0" layoutY="109.0" text="Hello, today is..." />
+                        <TextField fx:id="todaysDate" layoutX="440.0" layoutY="109.0" prefWidth="320.0" text="Hello, today is..." AnchorPane.leftAnchor="350.0" />
                         <TableView fx:id="homePageTable" layoutX="187.0" layoutY="160.0" prefHeight="320.0" prefWidth="653.0">
                           <columns>
                             <TableColumn fx:id="classNameTable" prefWidth="200.0" text="Class Name" />
@@ -381,6 +381,11 @@
                               <Button fx:id="btnDecember" layoutX="830.0" layoutY="17.0" minWidth="49.0" mnemonicParsing="false" onAction="#changeMonth" prefHeight="26.0" text="DEC" />
                           </buttons>
                         </ButtonBar>
+                        <Button fx:id="removeEventOrAssignmentBtn" layoutX="773.0" layoutY="629.0" mnemonicParsing="false" onAction="#removeEventOrAssignmentBtnClicked" prefHeight="51.0" prefWidth="60.0" text="-">
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </Button>
                      </children>
               </AnchorPane>
             </content>
@@ -394,10 +399,10 @@
                               <TableView fx:id="toDoTable" prefHeight="326.0" prefWidth="795.0">
                                 <columns>
                                   <TableColumn fx:id="toDoClass" minWidth="200.0" prefWidth="88.6666921377182" text="Class" />
-                                  <TableColumn fx:id="toDoAssignmentName" minWidth="150.0" prefWidth="114.66661834716797" text="Assignment Name" />
-                                    <TableColumn fx:id="toDoDueDate" minWidth="100.0" prefWidth="75.0" text="Due Date" />
-                                    <TableColumn fx:id="toDoCompleted" minWidth="100.0" prefWidth="75.0" text="Completed?" />
-                                    <TableColumn fx:id="toDoDelete" prefWidth="75.0" text="Delete?" />
+                                  <TableColumn fx:id="toDoAssignmentName" minWidth="175.0" prefWidth="114.66661834716797" text="Assignment Name" />
+                                    <TableColumn fx:id="toDoDueDate" minWidth="140.0" prefWidth="75.0" text="Due Date" />
+                                    <TableColumn fx:id="toDoCompleted" minWidth="140.0" prefWidth="75.0" text="Completed?" />
+                                    <TableColumn fx:id="toDoDelete" prefWidth="100.0" text="Delete?" />
                                 </columns>
                               </TableView>
                            </content>
@@ -456,7 +461,7 @@
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="676.0" prefWidth="1028.0">
             <children>
-                <VBox id="tblClasses" alignment="TOP_CENTER" fillWidth="false" layoutX="139.0" layoutY="75.0" prefHeight="646.0" prefWidth="750.0" spacing="20.0">
+                <VBox id="tblClasses" alignment="TOP_CENTER" fillWidth="false" layoutX="139.0" layoutY="37.0" prefHeight="646.0" prefWidth="750.0" spacing="20.0">
                     <children>
                         <!-- Header Label -->
                         <HBox alignment="CENTER">
@@ -612,7 +617,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea fx:id="thursdayClassArea" prefHeight="103.0" prefWidth="371.0" text="Assignment: Watercolor Painting">
+                                                <TextArea fx:id="thursdayClassArea" prefHeight="90.0" prefWidth="371.0" text="Assignment: Watercolor Painting">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -622,7 +627,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea fx:id="fridayClassArea" prefHeight="105.0" prefWidth="371.0" text="Assignment: Assignment 1">
+                                                <TextArea fx:id="fridayClassArea" prefHeight="90.0" prefWidth="371.0" text="Assignment: Assignment 1">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -632,7 +637,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextArea fx:id="saturdayClassArea" prefHeight="104.0" prefWidth="371.0" text="Assignment:">
+                                                <TextArea fx:id="saturdayClassArea" prefHeight="90.0" prefWidth="371.0" text="Assignment:">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>

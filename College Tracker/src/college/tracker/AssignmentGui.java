@@ -126,11 +126,9 @@ public class AssignmentGui {
                    // ensuring that if there are errors, it's displayed
                    boolean assignmentAdded = toDoDB.addAssignment(newAssignment);
                    if (assignmentAdded == true) {
-                        System.out.println("Assignment added: " + newAssignment.getAssignmentName().get());
                         controller.updateTableView(); 
-                   } else {
-                       System.out.println("Adding assignment has failed");
-                   }
+                        controller.updateCalendar();
+                   } 
                }        
             }
         }   
@@ -140,7 +138,6 @@ public class AssignmentGui {
         
         // Getting the list of classes from our db
         List<ClassInfo> classes = ClassDB.getClasses();
-        System.out.println("Classes fetched: " + classes.size());
         
         // converting and setting the items from ObservableList to combo box
         ObservableList<ClassInfo> classInfoList = FXCollections.observableArrayList(classes);

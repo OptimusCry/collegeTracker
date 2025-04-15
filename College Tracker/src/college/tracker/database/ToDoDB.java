@@ -27,12 +27,7 @@ public class ToDoDB {
         try (Connection connection = connect.connect(); 
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery()) {
-                         
-             // if connection fails, print out that it failedd
-            if (connection == null) {
-                System.out.println("Failed to get a connection, try again");
-            }
-            
+                                     
             // while the result set has more, retrieve the values
             while (rs.next()) {
                 int id = rs.getInt("id");

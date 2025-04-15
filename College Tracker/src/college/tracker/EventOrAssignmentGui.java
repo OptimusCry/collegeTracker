@@ -47,6 +47,31 @@ public class EventOrAssignmentGui {
         });
     }
     
+    public void showDeleteItemDialog() {
+        
+        VBox dialogVbox = new VBox(10);
+        
+        ButtonType deleteEventBtn = new ButtonType("Delete Event", ButtonBar.ButtonData.OK_DONE);
+        ButtonType deleteAssignmentBtn = new ButtonType("Delete Assignment", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelBtn = new ButtonType("Cancel", ButtonBar.ButtonData.OK_DONE);
+        
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Select Item to Delete");
+        dialog.getDialogPane().getButtonTypes().addAll(deleteEventBtn, deleteAssignmentBtn, cancelBtn);
+        
+        dialogVbox.getChildren().add(new Label("Choose whether to delete an Event or an Assignment:"));
+        dialog.getDialogPane().setContent(dialogVbox);
+        
+        dialog.showAndWait().ifPresent(response -> {
+            if (response == deleteEventBtn) {
+                openDeleteEvent();
+            } else if (response == deleteAssignmentBtn) {
+                openDeleteAssignment();
+            }
+            
+        });
+    }
+    
     private void openAddEvent() {
         EventGui eventGui = new EventGui(controller);
         eventGui.handleAddEvent();
@@ -55,6 +80,16 @@ public class EventOrAssignmentGui {
     private void openAddAssignment() {
         AssignmentGui assignmentGui = new AssignmentGui(controller);
         assignmentGui.handleAddAssignment();
+    }
+    
+    private void openDeleteEvent() {
+        DeleteEventGui deleteEventGui = new DeleteEventGui(controller);
+        deleteEventGui.handleDeleteEvent();
+    }
+    
+    private void openDeleteAssignment() {
+        DeleteAssignmentGui deleteAssignmentGui = new DeleteAssignmentGui(controller);
+        deleteAssignmentGui.handleDeleteAssignment();
     }
     
 }

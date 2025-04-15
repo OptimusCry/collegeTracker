@@ -84,5 +84,8 @@ public class EventInfo {
         return status;
     }
     
-    
+    @Override
+    public String toString() {
+        return getName().get();
+    }
 }

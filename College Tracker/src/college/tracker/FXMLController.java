@@ -56,6 +56,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Optional;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 
 
@@ -255,8 +256,6 @@ public class FXMLController implements Initializable {
                             toDo.setStatus(newStatus);
                             boolean success = ToDoDB.updateStatus(toDo.getId().get(), newStatus);
                             System.out.println("Updating status for " + toDo.getAssignmentName() + " to " + newStatus + ": " + success);
-                            
-            
                         });
                     }
 
@@ -276,14 +275,38 @@ public class FXMLController implements Initializable {
                         
                         // if the object isn't null, remove from db, if successful remove from the ui
                         if (toDo != null) {
-                            boolean success = ToDoDB.deleteAssignment(toDo);
-                            
-                            if (success) {
-                                toDoList.remove(toDo);
+                            if ("Pending".equals(toDo.getStatus().get())){
+                                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                                confirmationAlert.setTitle("Delete Assignment");
+                                confirmationAlert.setHeaderText("You are about to delete an incomplete assignment.");
+                                confirmationAlert.setContentText("Are you sure you want to delete this assignment without marking it as complete?");
+                                
+                                ButtonType yesButton = new ButtonType("Yes");
+                                ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+                                confirmationAlert.getButtonTypes().setAll(yesButton, noButton);
+                                
+                                Optional<ButtonType> result = confirmationAlert.showAndWait();
+                                
+                                if (result.isPresent() && result.get() == yesButton) {
+                                    boolean success = ToDoDB.deleteAssignment(toDo);
+                                    if (success) {
+                                        toDoList.remove(toDo); // Remove from the UI
+                                    } else {
+                                        System.out.println("Wasn't able to delete the assignment from the database");
+                                    }
+                                }
                             } else {
-                                System.out.println("Wasn't able to delete the assignment from the database");
+     
+                                boolean success = ToDoDB.deleteAssignment(toDo);
+                                if (success) {
+                                    toDoList.remove(toDo);
+                                } else {
+                                    System.out.println("Wasn't able to delete the assignment from the database");
+                                }
                             }
                         }
+                        
+                        updateCalendar();
                     });
                 }
 
@@ -568,42 +591,18 @@ public class FXMLController implements Initializable {
         String monthText = clickedButton.getText();
         
         switch (monthText) {
-            case "JAN": 
-                currentMonth = YearMonth.of(2025, 1); 
-                break;
-            case "FEB": 
-                currentMonth = YearMonth.of(2025, 2); 
-                break;
-            case "MAR": 
-                currentMonth = YearMonth.of(2025, 3); 
-                break;
-            case "APR": 
-                currentMonth = YearMonth.of(2025, 4); 
-                break;
-            case "MAY": 
-                currentMonth = YearMonth.of(2025, 5); 
-                break;
-            case "JUN": 
-                currentMonth = YearMonth.of(2025, 6); 
-                break;
-            case "JUL": 
-                currentMonth = YearMonth.of(2025, 7); 
-                break;
-            case "AUG": 
-                currentMonth = YearMonth.of(2025, 8); 
-                break;
-            case "SEP": 
-                currentMonth = YearMonth.of(2025, 9); 
-                break;
-            case "OCT": 
-                currentMonth = YearMonth.of(2025, 10); 
-                break;
-            case "NOV": 
-                currentMonth = YearMonth.of(2025, 11); 
-                break;
-            case "DEC": 
-                currentMonth = YearMonth.of(2025, 12); 
-                break;
+            case "JAN" -> currentMonth = YearMonth.of(2025, 1);
+            case "FEB" -> currentMonth = YearMonth.of(2025, 2);
+            case "MAR" -> currentMonth = YearMonth.of(2025, 3);
+            case "APR" -> currentMonth = YearMonth.of(2025, 4);
+            case "MAY" -> currentMonth = YearMonth.of(2025, 5);
+            case "JUN" -> currentMonth = YearMonth.of(2025, 6);
+            case "JUL" -> currentMonth = YearMonth.of(2025, 7);
+            case "AUG" -> currentMonth = YearMonth.of(2025, 8);
+            case "SEP" -> currentMonth = YearMonth.of(2025, 9);
+            case "OCT" -> currentMonth = YearMonth.of(2025, 10);
+            case "NOV" -> currentMonth = YearMonth.of(2025, 11);
+            case "DEC" -> currentMonth = YearMonth.of(2025, 12);
         }
         updateCalendar();
     }
@@ -669,6 +668,8 @@ public class FXMLController implements Initializable {
                 }
             }
         }
+        
+        highlightSelectedMonth();
     }
     
     private void populateCalendar() {
@@ -765,6 +766,11 @@ public class FXMLController implements Initializable {
     public void addEventOrAssignmentBtnClicked(ActionEvent event) {
         eventOrAssignmentGui.showAddItemDialog();
         
+    }
+    
+    @FXML
+    public void removeEventOrAssignmentBtnClicked(ActionEvent event) {
+        eventOrAssignmentGui.showDeleteItemDialog();
     }
 
     public void changeThemeStyle(String themeName, Stage primaryStage) {

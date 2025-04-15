@@ -77,5 +77,10 @@ public class ToDoInfo {
     public void setClassId(int classId) {
         this.classId.set(classId);
     }
+    
+    @Override
+    public String toString() {
+        return getAssignmentName().get();
+    }
       
 }
